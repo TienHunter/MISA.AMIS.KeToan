@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MISA.AMIS.KeToan.API", "MISA.AMIS.KeToan.API\MISA.AMIS.KeToan.API.csproj", "{BEB2904C-0EF9-4980-803C-E6CA105A9EDF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MISA.AMIS.KeToan.BL", "MISSA.AMIS.KETOAN.BL\MISA.AMIS.KeToan.BL.csproj", "{DB561EED-10DF-48F2-BABA-E62161591FA8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MISA.AMIS.KeToan.DL", "MISA.AMIS.KETOAN.DL\MISA.AMIS.KeToan.DL.csproj", "{CCB17C84-3BAC-455A-A536-A2355BE6BD84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MISA.AMIS.KeToan.Common", "MISA.AMIS.KeToan.Common\MISA.AMIS.KeToan.Common.csproj", "{0F5DFED0-ADC0-40B2-BD96-1C7A7BB0A1A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BEB2904C-0EF9-4980-803C-E6CA105A9EDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEB2904C-0EF9-4980-803C-E6CA105A9EDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEB2904C-0EF9-4980-803C-E6CA105A9EDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEB2904C-0EF9-4980-803C-E6CA105A9EDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB561EED-10DF-48F2-BABA-E62161591FA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB561EED-10DF-48F2-BABA-E62161591FA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB561EED-10DF-48F2-BABA-E62161591FA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB561EED-10DF-48F2-BABA-E62161591FA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCB17C84-3BAC-455A-A536-A2355BE6BD84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCB17C84-3BAC-455A-A536-A2355BE6BD84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCB17C84-3BAC-455A-A536-A2355BE6BD84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCB17C84-3BAC-455A-A536-A2355BE6BD84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F5DFED0-ADC0-40B2-BD96-1C7A7BB0A1A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F5DFED0-ADC0-40B2-BD96-1C7A7BB0A1A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F5DFED0-ADC0-40B2-BD96-1C7A7BB0A1A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F5DFED0-ADC0-40B2-BD96-1C7A7BB0A1A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {590C1C10-AC9C-4A3C-AE98-FF96D2E8B968}
+	EndGlobalSection
+EndGlobal
