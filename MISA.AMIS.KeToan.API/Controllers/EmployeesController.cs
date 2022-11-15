@@ -36,6 +36,45 @@ namespace MISA.AMIS.KeToan.API.Controllers
 
         #region Method
 
+
+        /// <summary>
+        /// API lấy mã nhân viên lớn nhất trong database
+        /// </summary>
+        /// <returns>mã nhân viên lớn nhất</returns>
+        /// CreatedBy: VDTIEN (14/11/2022)
+        [HttpGet("EmployeeCodeMax")]
+        public IActionResult GetEmployeeCodeMax()
+        {
+            try
+            {
+                var employeeCode = _employeeBL.GetEmployeeCodeMax();
+                //Xử lý kết quả trả về
+                if (employeeCode != null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, employeeCode);
+                }
+                return StatusCode(StatusCodes.Status200OK ,"NV00000");
+
+                //Thành công: trả về dữ liệu cho FE
+
+                //Thất bại: trả về lỗi
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = AMISErrorCode.Exception,
+                    DevMsg = Resources.DevMsg_Exception,
+                    UserMsg = Resources.UserMsg_Exception,
+                    MoreInfo = Resources.MoreInfo_Exception,
+                    TraceId = HttpContext.TraceIdentifier
+                });
+            }
+
+            //Try catch exception
+        }
+
         /// <summary>
         /// API lấy danh sách nhân viên theo bộ lọc và phân trang
         /// </summary>
@@ -72,16 +111,29 @@ namespace MISA.AMIS.KeToan.API.Controllers
                 parameters.Add("@KeySearch", keyword);
 
                 //Thực hiện gọi vào DB
-                var employees = mySqlConnection.Query(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
+                var results = mySqlConnection.QueryMultiple(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
 
+                var employees = results.Read<dynamic>().ToList();
+                long TotalRecords = results.Read<long>().Single();
+                long TotalPages = (long)Math.Ceiling((double)TotalRecords /limit);
                 //Xử lý kết quả trả về
                 //Thành công: trả về dữ liệu cho FE
                 if (employees != null)
                 {
-                    return StatusCode(StatusCodes.Status200OK, employees);
+                    return StatusCode(StatusCodes.Status200OK, new 
+                    {
+                        Data = employees,
+                        TotalRecords,
+                        TotalPages
+                    });
                 }
                 //Thất bại: trả về lỗi
-                return StatusCode(StatusCodes.Status200OK, new List<Employee>());
+                return StatusCode(StatusCodes.Status200OK, new
+                {
+                    Data = new List<Employee>(),
+                    TotalRecords = 0,
+                    TotalPages=0
+                }); 
             }
             catch (Exception e)
             {

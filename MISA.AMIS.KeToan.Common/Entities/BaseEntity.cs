@@ -13,22 +13,22 @@ namespace MISA.AMIS.KeToan.Common.Entities
         /// <summary>
         /// Ngày tạo
         /// </summary>
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
 
         /// <summary>
         /// NNgười tạo
         /// </summary>
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
 
         /// <summary>
         /// Thời gian chỉnh sửa gần nhất
         /// </summary>
-        public DateTime UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
         /// <summary>
         /// Thời gian chỉnh sửa gần nhất
         /// </summary>
-        public string UpdatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
 
         #endregion
     }

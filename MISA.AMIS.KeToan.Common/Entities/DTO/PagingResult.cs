@@ -13,6 +13,11 @@
         /// <summary>
         /// Tổng số bản ghi
         /// </summary>
-        public long TotalRecord { get; set; }
+        public long TotalRecords { get; set; }
+
+        /// <summary>
+        /// Tổng số trang
+        /// </summary>
+        public long TotalPages { get; set; }
     }
 }

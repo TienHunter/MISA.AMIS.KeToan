@@ -54,5 +54,12 @@ namespace MISA.AMIS.KeToan.DL
         /// <returns>Danh sách nhân viên và tổng số bản ghi</returns>
         /// CreatedBy: VDTIEN(1/11/2022)
         public IEnumerable<dynamic> GetEmployeesByFilterAndPaging(string keyWord, int limit, int offset, string sort);
+
+        /// <summary>
+        /// API lấy mã nhân viên lớn nhất trong database
+        /// </summary>
+        /// <returns>mã nhân viên lớn nhất</returns>
+        /// CreatedBy:VDTIEN(14/11/2022)
+        public string GetEmployeeCodeMax();
     }
 }

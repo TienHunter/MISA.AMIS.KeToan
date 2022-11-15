@@ -25,7 +25,7 @@ namespace MISA.AMIS.KeToan.Common.Entities
         /// </summary>
         [Required(ErrorMessage="Mã nhân viên không được để trống")]        
         public string EmployeeCode { get; set; }
-        
+
         /// <summary>
         /// Tên nhân viên
         /// </summary> 
@@ -35,12 +35,12 @@ namespace MISA.AMIS.KeToan.Common.Entities
         /// <summary>
         /// Giới tính
         /// </summary>
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         /// <summary>
         /// Ngày sinh
         /// </summary>
-       public DateTime DateOfBirth { get; set; }
+       public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
         /// id phòng bàn
@@ -54,57 +54,57 @@ namespace MISA.AMIS.KeToan.Common.Entities
         /// <summary>
         /// tên chức danh
         /// </summary>
-        public string JobPositionName { get; set; }
+        public string? JobPositionName { get; set; }
 
         /// <summary>
         /// Số CMND
         /// </summary>
-        public string IdentityNumber { get; set; }
+        public string? IdentityNumber { get; set; }
         
         /// <summary>
         /// Ngày cấp CMND
         /// </summary>
-        public DateTime IdentityDate { get; set; }
+        public DateTime? IdentityDate { get; set; }
         
         /// <summary>
         /// Nơi cấp CMND
         /// </summary>
-        public string IdentityPlace { get; set; }
+        public string? IdentityPlace { get; set; }
         
         /// <summary>
         /// Địa chỉ
         /// </summary>
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         /// <summary>
         /// Số điện thoại
         /// </summary>
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
         /// <summary>
         /// số điện thoại cố định
         /// </summary>
-        public string TelephoneNumber { get; set; }
+        public string? TelephoneNumber { get; set; }
 
         /// <summary>
         /// Email
         /// </summary>
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         /// <summary>
         /// Tên ngân hàng
         /// </summary>
-        public string BankName { get; set; }
+        public string? BankName { get; set; }
 
         /// <summary>
         /// Số TK
         /// </summary>
-        public string BankAccountNumber { get; set; }
+        public string? BankAccountNumber { get; set; }
 
         /// <summary>
         /// Chi nhánh ngân hàng
         /// </summary>
-        public string BankBranchName { get; set; }
+        public string? BankBranchName { get; set; }
 
         #endregion
 

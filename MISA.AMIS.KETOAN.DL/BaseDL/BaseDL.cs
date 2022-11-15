@@ -27,15 +27,15 @@ namespace MISA.AMIS.KeToan.DL
 
             // Chuẩn bị tham số đầu vào
 
-            var records = new List<T>();
             // Thực hiện gọi vào DB
             using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
             {
 
-                records = (List<T>)mySqlConnection.Query<T>(sql: storedProcedureName, commandType: System.Data.CommandType.StoredProcedure);
+               var records = mySqlConnection.Query<T>(sql: storedProcedureName, commandType: System.Data.CommandType.StoredProcedure);
+                return records;
             }
-            // Xử lý kết quả trả về
-            return records;
+            // Xử lý kết quả trả về 
+            
         }
 
         /// <summary>

@@ -143,5 +143,29 @@ namespace MISA.AMIS.KeToan.DL
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// API lấy mã nhân viên lớn nhất trong database
+        /// </summary>
+        /// <returns>mã nhân viên lớn nhất</returns>
+        /// CreatedBy: VDTIEN (14/11/2022)
+        public string GetEmployeeCodeMax()
+        {
+            //Khởi tạo kết nối tới DB MySQL
+            string connectionString = "Server=localhost;Port=3306;Database=misa.web09.ctm.vdtien;Uid=root;Pwd=tien.hust;";
+            var mySqlConnection = new MySqlConnection(connectionString);
+
+            //Chuẩn bị câu lệnh SQL
+            string storedProcedureName = "Proc_employee_GetEmployeeCodeMax";
+
+            //Chuẩn bị tham số đầu vào
+
+            //Thực hiện gọi vào DB
+            string employeeCode = mySqlConnection.QueryFirstOrDefault<string>(storedProcedureName, commandType: System.Data.CommandType.StoredProcedure);
+
+            //Xử lý kết quả trả về
+            // numberOfRowsAffected luôn trả về 0 ??
+            return employeeCode;
+        }
     }
 }

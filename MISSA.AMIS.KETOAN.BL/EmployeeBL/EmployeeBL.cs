@@ -47,5 +47,15 @@ namespace MISA.AMIS.KeToan.BL
         {
             return _employeeDL.UpdateEmployee(employeeID, employee);
         }
+
+        /// <summary>
+        /// API lấy mã nhân viên lớn nhất trong database
+        /// </summary>
+        /// <returns>mã nhân viên lớn nhất</returns>
+        /// CreatedBy: VDTIEN (14/11/2022)
+        public string GetEmployeeCodeMax()
+        {
+            return _employeeDL.GetEmployeeCodeMax();
+        }
     }
 }

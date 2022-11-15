@@ -27,6 +27,13 @@ namespace MISA.AMIS.KeToan.BL
         /// CreatedBy: VDTien (1/11/2022)
         public int UpdateEmployee(Guid employeeID, Employee employee);
 
+
+        /// <summary>
+        /// API lấy mã nhân viên lớn nhất trong database
+        /// </summary>
+        /// <returns>mã nhân viên lớn nhất</returns>
+        /// CreatedBy: VDTIEN (14/11/2022)
+        public string GetEmployeeCodeMax();
     } 
 
 }

@@ -13,7 +13,7 @@ builder.Services.AddScoped(typeof(IBaseDL<>),typeof(BaseDL<>));
 builder.Services.AddScoped(typeof(IBaseBL<>),typeof(BaseBL<>));
 builder.Services.AddScoped<IEmployeeBL,EmployeeBL>();
 builder.Services.AddScoped<IEmployeeDL, EmployeeDL>();
-
+builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 // Lấy dữ liệu connection string từ file appsettings.Development.json
 DatabaseContext.ConnectionString = builder.Configuration.GetConnectionString("MySQL");
 
