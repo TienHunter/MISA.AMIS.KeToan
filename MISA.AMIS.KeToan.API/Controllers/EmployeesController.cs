@@ -12,6 +12,7 @@ using MISA.AMIS.KeToan.BL;
 using System.Net.WebSockets;
 using MISA.AMIS.KeToan.Common;
 using MISA.AMIS.KeToan.Common.Enums;
+using MISA.AMIS.KeToan.DL;
 
 namespace MISA.AMIS.KeToan.API.Controllers
 {
@@ -163,12 +164,12 @@ namespace MISA.AMIS.KeToan.API.Controllers
 
             try
             {
-                int numberOfRowsAffected = _employeeBL.InsertEmployee(employee);
+                var result = _employeeBL.InsertEmployee(employee);
                 //Xử lý kết quả trả về
                 //Thành công: trả về dữ liệu cho FE
-                if (numberOfRowsAffected > 0)
+                if (result.numberOfRowsAffected > 0)
                 {
-                    return StatusCode(StatusCodes.Status201Created, numberOfRowsAffected);
+                    return StatusCode(StatusCodes.Status201Created, result.EmployeeID);
                 }
 
                 //Thất bại: trả về lỗi
@@ -214,11 +215,11 @@ namespace MISA.AMIS.KeToan.API.Controllers
         {
             try
             {
-                int numberOfRowsAffected = _employeeBL.UpdateEmployee(employeeID, employee);
+                var result = _employeeBL.UpdateEmployee(employeeID, employee);
                 //Xử lý kết quả trả về
-                if (numberOfRowsAffected > 0)
+                if (result.numberOfRowsAffected > 0)
                 {
-                    return StatusCode(StatusCodes.Status200OK, numberOfRowsAffected);
+                    return StatusCode(StatusCodes.Status200OK, result.EmployeeID);
                 }
 
                 return StatusCode(StatusCodes.Status500InternalServerError, new
@@ -252,30 +253,20 @@ namespace MISA.AMIS.KeToan.API.Controllers
         /// <returns>ID nhân viên vừa xóa</returns>
         /// CreatedBy: VDTien (1/11/2022)
         [HttpDelete("{employeeID}")]
-        public IActionResult DeleteEmpolyee([FromRoute] Guid employeeID)
+        public IActionResult DeleteEmployeeByID([FromRoute] Guid employeeID)
         {
 
             try
             {
-                //Khởi tạo kết nối tới DB MySQL
-                string connectionString = "Server=localhost;Port=3306;Database=misa.web09.ctm.vdtien;Uid=root;Pwd=tien.hust;";
-                var mySqlConnection = new MySqlConnection(connectionString);
-
-                //Chuẩn bị câu lệnh SQL
-                string storedProcedureName = "Proc_employee_DeleteByID";
-
-                //Chuẩn bị tham số đầu vào
-                var parameters = new DynamicParameters();
-                parameters.Add("@EmployeeID", employeeID);
-
-                //Thực hiện gọi vào DB
-                var numberOfRowsAffected = mySqlConnection.Execute(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
-
+                var result = _employeeBL.DeleteEmployeeByID(employeeID);
                 //Xử lý kết quả trả về
-                if (numberOfRowsAffected > 0)
+                //Thành công: trả về dữ liệu cho FE
+                if (result.numberOfRowsAffected > 0)
                 {
-                    return StatusCode(StatusCodes.Status200OK, employeeID);
+                    return StatusCode(StatusCodes.Status201Created, result.EmployeeID);
                 }
+
+                //Thất bại: trả về lỗi
                 return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
                     ErrorCode = 2,
@@ -284,10 +275,7 @@ namespace MISA.AMIS.KeToan.API.Controllers
                     MoreInfo = "https://openapi.misa.com.vn/errorcode/1",
                     TraceId = HttpContext.TraceIdentifier
                 });
-
-                //Thành công: trả về dữ liệu cho FE
-
-                //Thất bại: trả về lỗi
+              
             }
             catch (Exception e)
             {
@@ -314,52 +302,20 @@ namespace MISA.AMIS.KeToan.API.Controllers
         [HttpPost("deleteBatch")]
         public IActionResult DeleteMultipleEmployees([FromBody] List<Guid> listEmployeeID)
         {
-            //Khởi tạo kết nối tới DB MySQL
-            string connectionString = "Server=localhost;Port=3306;Database=misa.web09.ctm.vdtien;Uid=root;Pwd=tien.hust;";
-            var mySqlConnection = new MySqlConnection(connectionString);
-            mySqlConnection.Open(); //mở kết nối
-            MySqlTransaction myTrans;
 
-            // Start a local transaction
-            myTrans = mySqlConnection.BeginTransaction();
-            //Chuẩn bị câu lệnh SQL
-            string storedProcedureName = "Proc_employee_deleteMultiEmployee";
             try
             {
-
 
                 //Chuẩn bị tham số đầu vào
                 string listID = string.Join("\",\"", listEmployeeID);
                 listID = "\"" + listID + "\"";
-                var parameters = new DynamicParameters();
-                parameters.Add("@ListID", listID);
-                Console.WriteLine(listID);
-                //Thực hiện gọi vào DB
-                var numberOfRowsAffected = mySqlConnection.Execute(storedProcedureName, parameters, myTrans, commandType: System.Data.CommandType.StoredProcedure);
 
-                //Xử lý kết quả trả về
-                myTrans.Commit();
-                return StatusCode(StatusCodes.Status200OK, 1);
-                /*               if (numberOfRowsAffected > listEmployeeID)
-                                {
-                                    return StatusCode(StatusCodes.Status200OK, employeeID);
-                                }
-                                return StatusCode(StatusCodes.Status500InternalServerError, new
-                                {
-                                    ErrorCode = 2,
-                                    DevMsg = "Database delete record failed.",
-                                    UserMsg = "Xóa nhân nhân viên không thành công !",
-                                    MoreInfo = "https://openapi.misa.com.vn/errorcode/1",
-                                    TraceId = HttpContext.TraceIdentifier
-                                });*/
+                int result = _employeeBL.DeleteMultipleEmployeesByID(listID);
 
-                //Thành công: trả về dữ liệu cho FE
-
-                //Thất bại: trả về lỗi
+                return StatusCode(StatusCodes.Status200OK, result);
             }
             catch (Exception e)
             {
-                myTrans.Rollback();
                 Console.WriteLine(e.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
@@ -370,10 +326,8 @@ namespace MISA.AMIS.KeToan.API.Controllers
                     TraceId = HttpContext.TraceIdentifier
                 });
             }
-            finally
-            {
-                mySqlConnection.Close();
-            }
+
+
 
         }
         #endregion

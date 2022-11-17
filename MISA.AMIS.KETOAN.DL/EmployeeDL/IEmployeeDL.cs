@@ -16,7 +16,7 @@ namespace MISA.AMIS.KeToan.DL
         /// <param name="employee">Đối tượng nhân viên cần thêm mới</param>
         /// <returns>ID nhân viên vừa thêm mới</returns>
         /// Created by: VDTien (01/11/2022)
-        public int InsertEmployee(Employee employee);
+        public dynamic InsertEmployee(Employee employee);
 
         /// <summary>
         /// API sửa thông tin nhân viên theo ID
@@ -25,7 +25,7 @@ namespace MISA.AMIS.KeToan.DL
         /// <param name="employee">Đối tượng nhân viên muốn sửa</param>
         /// <returns>ID của nhân viên vừa sửa</returns>
         /// CreatedBy: VDTien (1/11/2022)
-        public int UpdateEmployee(Guid employeeID,Employee employee);
+        public dynamic UpdateEmployee(Guid employeeID,Employee employee);
 
         /// <summary>
         /// API xóa thông tin nhân viên theo ID
@@ -33,7 +33,7 @@ namespace MISA.AMIS.KeToan.DL
         /// <param name="employeeID">ID nhân viên muốn xóa</param>
         /// <returns>ID nhân viên vừa xóa</returns>
         /// CreatedBy: VDTien (1/11/2022)
-        public Guid DeleteEmployeeByID(Guid employeeID);
+        public dynamic DeleteEmployeeByID(Guid employeeID);
 
         /// <summary>
         /// API xóa nhiều nhân viên theo danh sách ID
@@ -41,7 +41,7 @@ namespace MISA.AMIS.KeToan.DL
         /// <param name="listEmployeeID">danh sách id nhân viên muốn xóa</param>
         /// <returns>StatusCode200</returns>
         /// CreatedByL VDTIEN(1/11/2022)
-        public int DeleteMultipleEmployeesByID(List<Guid> listEmployeeID);
+        public int DeleteMultipleEmployeesByID(string listEmployeeID);
 
         /// <summary>
         /// API lấy danh sách nhân viên theo bộ lọc và phân trang
@@ -53,13 +53,13 @@ namespace MISA.AMIS.KeToan.DL
         /// <param name="sort">Sắp xếp theo chiều nào</param>
         /// <returns>Danh sách nhân viên và tổng số bản ghi</returns>
         /// CreatedBy: VDTIEN(1/11/2022)
-        public IEnumerable<dynamic> GetEmployeesByFilterAndPaging(string keyWord, int limit, int offset, string sort);
+        public PagingResult GetEmployeesByFilterAndPaging(string keyWord, int limit, int offset, string sort);
 
         /// <summary>
         /// API lấy mã nhân viên lớn nhất trong database
         /// </summary>
         /// <returns>mã nhân viên lớn nhất</returns>
         /// CreatedBy:VDTIEN(14/11/2022)
-        public string GetEmployeeCodeMax();
+        public dynamic GetEmployeeCodeMax();
     }
 }

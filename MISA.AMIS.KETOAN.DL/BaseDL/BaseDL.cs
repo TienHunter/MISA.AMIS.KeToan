@@ -12,6 +12,13 @@ namespace MISA.AMIS.KeToan.DL
 {
     public class BaseDL<T> : IBaseDL<T>
     {
+
+        #region Field
+        // Khởi tạo thamo số kết nối tới DB MySSQL
+        private string connectionString = DatabaseContext.ConnectionString;
+
+        #endregion
+
         /// <summary>
         /// Lấy danh sách tất cả bản ghi
         /// </summary>
@@ -19,23 +26,23 @@ namespace MISA.AMIS.KeToan.DL
         /// Created by: VDTien(10/11/2022)
         public IEnumerable<T> GetAllRecords()
         {
-            // Khởi tạo kết nối tới DB MySSQL
+
 
 
             // Chuẩn bị câu lệnh SQL
-            string storedProcedureName = String.Format(Procedure.GET_ALL,typeof(T).Name);
+            string storedProcedureName = String.Format(Procedure.GET_ALL, typeof(T).Name);
 
             // Chuẩn bị tham số đầu vào
 
             // Thực hiện gọi vào DB
-            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            using (var mySqlConnection = new MySqlConnection(connectionString))
             {
 
-               var records = mySqlConnection.Query<T>(sql: storedProcedureName, commandType: System.Data.CommandType.StoredProcedure);
+                var records = mySqlConnection.Query<T>(sql: storedProcedureName, commandType: System.Data.CommandType.StoredProcedure);
                 return records;
             }
             // Xử lý kết quả trả về 
-            
+
         }
 
         /// <summary>
@@ -50,7 +57,7 @@ namespace MISA.AMIS.KeToan.DL
             //Khởi tạo kết nối tới DB MySQL
 
             //Chuẩn bị câu lệnh SQL
-            string storedProcedureName = String.Format(Procedure.GET_BY_ID,typeof(T).Name);
+            string storedProcedureName = String.Format(Procedure.GET_BY_ID, typeof(T).Name);
 
             //Chuẩn bị tham số đầu vào
             var parameters = new DynamicParameters();
@@ -67,5 +74,12 @@ namespace MISA.AMIS.KeToan.DL
             ////Xử lý kết quả trả về
             //return null;
         }
+
+        #region Methods
+
+
+
+        #endregion
+
     }
 }

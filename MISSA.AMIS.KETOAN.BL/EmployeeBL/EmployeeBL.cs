@@ -31,7 +31,7 @@ namespace MISA.AMIS.KeToan.BL
         /// <param name="employee">Đối tượng nhân viên cần thêm mới</param>
         /// <returns>ID nhân viên vừa thêm mới</returns>
         /// Created by: VDTien (01/11/2022)
-        public int InsertEmployee(Employee employee)
+        public dynamic InsertEmployee(Employee employee)
         {
             return _employeeDL.InsertEmployee(employee);
         }
@@ -43,7 +43,7 @@ namespace MISA.AMIS.KeToan.BL
         /// <param name="employee">Đối tượng nhân viên muốn sửa</param>
         /// <returns>ID của nhân viên vừa sửa</returns>
         /// CreatedBy: VDTien (1/11/2022)
-        public int UpdateEmployee(Guid employeeID, Employee employee)
+        public dynamic UpdateEmployee(Guid employeeID, Employee employee)
         {
             return _employeeDL.UpdateEmployee(employeeID, employee);
         }
@@ -56,6 +56,28 @@ namespace MISA.AMIS.KeToan.BL
         public string GetEmployeeCodeMax()
         {
             return _employeeDL.GetEmployeeCodeMax();
+        }
+
+        /// <summary>
+        /// API xóa thông tin nhân viên theo ID
+        /// </summary>
+        /// <param name="employeeID">ID nhân viên muốn xóa</param>
+        /// <returns>ID nhân viên vừa xóa</returns>
+        /// CreatedBy: VDTien (1/11/2022)
+        public dynamic DeleteEmployeeByID(Guid employeeID)
+        {
+            return _employeeDL.DeleteEmployeeByID(employeeID);
+        }
+
+        /// <summary>
+        /// API xóa nhiều nhân viên theo danh sách ID
+        /// </summary>
+        /// <param name="listEmployeeID">danh sách id nhân viên muốn xóa</param>
+        /// <returns>StatusCode200</returns>
+        /// CreatedByL VDTIEN(1/11/2022)
+        public int DeleteMultipleEmployeesByID(string listEmployeeID)
+        {
+            return _employeeDL.DeleteMultipleEmployeesByID(listEmployeeID);
         }
     }
 }
