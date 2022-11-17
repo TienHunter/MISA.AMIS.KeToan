@@ -236,29 +236,15 @@ namespace MISA.AMIS.KeToan.DL
             using (var mySqlConnection = new MySqlConnection(connectionString))
             {
                 mySqlConnection.Open(); //mở kết nối
-                MySqlTransaction myTrans;
-                // Start a local transaction
-                myTrans = mySqlConnection.BeginTransaction();
-
-                try
+                using (var myTrans = mySqlConnection.BeginTransaction())
                 {
                     //Thực hiện gọi vào DB
                     int numberOfRowsAffected = mySqlConnection.Execute(storedProcedureName, parameters, myTrans, commandType: System.Data.CommandType.StoredProcedure);
                     //Xử lý kết quả trả về
                     myTrans.Commit();
                     return 1;
-                } catch(Exception e)
-                {
-                    myTrans.Rollback();
-                    Console.WriteLine(e.Message);
-                    return -1;
                 }
-                finally
-                {
-                    mySqlConnection.Close();
-                }
-
-
+                return -1;
             }
         }
 

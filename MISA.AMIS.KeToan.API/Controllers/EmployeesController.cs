@@ -312,7 +312,21 @@ namespace MISA.AMIS.KeToan.API.Controllers
 
                 int result = _employeeBL.DeleteMultipleEmployeesByID(listID);
 
+                //Thành công: trả về dữ liệu cho FE
+                if (result==1)
+                {
                 return StatusCode(StatusCodes.Status200OK, result);
+                }
+
+                //Thất bại: trả về lỗi
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    ErrorCode = 2,
+                    DevMsg = "Database delete batch record failed.",
+                    UserMsg = "Xóa nhân nhân viên hàng loạt không thành công !",
+                    MoreInfo = "https://openapi.misa.com.vn/errorcode/1",
+                    TraceId = HttpContext.TraceIdentifier
+                });
             }
             catch (Exception e)
             {
