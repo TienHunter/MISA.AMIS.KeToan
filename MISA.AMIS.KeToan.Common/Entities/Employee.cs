@@ -23,13 +23,13 @@ namespace MISA.AMIS.KeToan.Common.Entities
         /// <summary>
         /// Mã nhân viên
         /// </summary>
-        [Required(ErrorMessage="Mã nhân viên không được để trống")]        
+       // [Required(ErrorMessage="Mã nhân viên không được để trống")]        
         public string EmployeeCode { get; set; }
 
         /// <summary>
         /// Tên nhân viên
         /// </summary> 
-        [Required(ErrorMessage="Tên nhân viên không được để trống")]
+       // [Required(ErrorMessage="Tên nhân viên không được để trống")]
         public string EmployeeName { get; set; }
         
         /// <summary>

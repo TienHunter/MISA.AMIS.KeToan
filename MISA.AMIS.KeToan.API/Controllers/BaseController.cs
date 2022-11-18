@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MISA.AMIS.KeToan.BL;
 using MISA.AMIS.KeToan.Common.Entities;
 using MISA.AMIS.KeToan.Common.Enums;
-using MISA.AMIS.KeToan.Common;
+using MISA.AMIS.KeToan.Common.Resources;
 using MySqlConnector;
 
 namespace MISA.AMIS.KeToan.API.Controllers
@@ -59,9 +59,9 @@ namespace MISA.AMIS.KeToan.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
                 {
                     ErrorCode = AMISErrorCode.Exception,
-                    DevMsg = Resources.DevMsg_Exception,
-                    UserMsg = Resources.UserMsg_Exception,
-                    MoreInfo = Resources.MoreInfo_Exception,
+                    DevMsg = e.Message,
+                    UserMsg = ResourceVN.UserMsg_Exception,
+                    MoreInfo = e.Message,
                     TraceId = HttpContext.TraceIdentifier
                 });
             }
@@ -96,15 +96,17 @@ namespace MISA.AMIS.KeToan.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
                 {
                     ErrorCode = AMISErrorCode.Exception,
-                    DevMsg = Resources.DevMsg_Exception,
-                    UserMsg = Resources.UserMsg_Exception,
-                    MoreInfo = Resources.MoreInfo_Exception,
+                    DevMsg = e.Message,
+                    UserMsg = ResourceVN.UserMsg_Exception,
+                    MoreInfo = e.Message,
                     TraceId = HttpContext.TraceIdentifier
                 });
             }
 
             //Try catch exception
         }
+
+
         #endregion
     }
 }

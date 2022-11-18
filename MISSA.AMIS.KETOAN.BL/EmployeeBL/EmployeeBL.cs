@@ -79,5 +79,33 @@ namespace MISA.AMIS.KeToan.BL
         {
             return _employeeDL.DeleteMultipleEmployeesByID(listEmployeeID);
         }
+
+        /// <summary>
+        /// Kiểm tra mã nhân viên có trùng hay không
+        /// </summary>
+        /// <param name="EmployeeCode">Mã nhân viên</param>
+        /// <param name="EmployeeID">ID nhên viên</param>
+        /// <returns>true:đã bị trùng; false: không bị trùng</returns>
+        /// CreatedBy:VDTIEN(18/11/2022)
+
+        public bool checkDuplicateEmployeeCode(string EmployeeCode, Guid? EmployeeID)
+        {
+            return _employeeDL.checkDuplicateEmployeeCode(EmployeeCode, EmployeeID);
+        }
+
+        /// <summary>
+        /// API lấy danh sách nhân viên theo bộ lọc và phân trang
+        /// </summary>
+        /// <param name="keyword">Từ khóa muốn tìm kiếm</param>
+        /// <param name="departmentID">ID của phòng ban muốn lọc</param>
+        /// <param name="limit">Số bản ghi muốn lấy</param>
+        /// <param name="offset">Vị trí của bản ghi bắt đầu lấy</param>
+        /// <param name="sort">Sắp xếp theo chiều nào</param>
+        /// <returns>Danh sách nhân viên và tổng số bản ghi</returns>
+        /// CreatedBy: VDTIEN(1/11/2022)
+        public PagingResult GetEmployeesByFilterAndPaging(string keyword, int limit, int offset, string sort)
+        {
+            return _employeeDL.GetEmployeesByFilterAndPaging(keyword, limit, offset, sort);
+        }
     }
 }

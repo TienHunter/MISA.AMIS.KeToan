@@ -61,5 +61,14 @@ namespace MISA.AMIS.KeToan.DL
         /// <returns>mã nhân viên lớn nhất</returns>
         /// CreatedBy:VDTIEN(14/11/2022)
         public dynamic GetEmployeeCodeMax();
+
+        /// <summary>
+        /// Kiểm tra mã nhân viên có trùng hay không
+        /// </summary>
+        /// <param name="EmployeeCode">Mã nhân viên</param>
+        /// <param name="EmployeeID">ID nhên viên</param>
+        /// <returns>true:đã bị trùng; false: không bị trùng</returns>
+        /// CreatedBy:VDTIEN(18/11/2022)
+        public bool checkDuplicateEmployeeCode(string EmployeeCode, Guid? EmployeeID);
     }
 }

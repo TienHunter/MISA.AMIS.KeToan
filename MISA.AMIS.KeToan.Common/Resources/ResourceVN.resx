@@ -117,16 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DevMsg_ErrorInsert" xml:space="preserve">
+    <value>Database insert failed.</value>
+    <comment>Message trả về cho dev khi gọi API insert thất bại</comment>
+  </data>
   <data name="DevMsg_Exception" xml:space="preserve">
     <value>Catched an exception.</value>
-    <comment>Message trả về cho dev khi gọi APIgặp exception</comment>
+    <comment>Message trả về cho dev khi gọi API gặp exception</comment>
+  </data>
+  <data name="MoreInfo_ErrorInsert" xml:space="preserve">
+    <value>https://openapi.misa.com.vn/errorcode/1</value>
+    <comment>Thông tin chi tiết của lỗi khi gọi API insert thất bại</comment>
   </data>
   <data name="MoreInfo_Exception" xml:space="preserve">
     <value>https://openapi.misa.com.vn/errorcode/1</value>
     <comment>Thông tin chi tiết của lỗi khi gọi API gặp exception</comment>
   </data>
+  <data name="UserMsg_ErrorInsert" xml:space="preserve">
+    <value>Thêm mới nhân viên không thành công !</value>
+    <comment>Message trả về cho user khi gọi API insert thất bại</comment>
+  </data>
   <data name="UserMsg_Exception" xml:space="preserve">
     <value>Có lỗi xảy ra! Vui lòng liên hệ với MISA.</value>
     <comment>Message trả về cho user khi gọi API gặp exception</comment>
+  </data>
+  <data name="ValidateError_DateOfBirth" xml:space="preserve">
+    <value>Ngày sinh không lớn hơn ngày hiện tại</value>
+    <comment>Ngày sinh không lớn hơn ngày hiện tại</comment>
+  </data>
+  <data name="ValidateError_DuplicateEmployeeCode" xml:space="preserve">
+    <value>Mã nhân viên không được phép trùng</value>
+    <comment>Mã nhân viên không được phép trùng</comment>
+  </data>
+  <data name="ValidateError_Email" xml:space="preserve">
+    <value>Email không đúng định dạng</value>
+    <comment>Email không đúng định dạng</comment>
+  </data>
+  <data name="ValidateError_EmployeeCodeNotEmpty" xml:space="preserve">
+    <value>Mã nhân viên không được để trống</value>
+    <comment>Mã nhân viên không được để trống</comment>
+  </data>
+  <data name="ValidateError_EmployeeNameNotEmpty" xml:space="preserve">
+    <value>Tên nhân viên không được để trống</value>
+    <comment>Tên nhân viên không được để trống</comment>
+  </data>
+  <data name="ValidateError_Input" xml:space="preserve">
+    <value>Dữ liệu đầu vào không hợp lệ</value>
+    <comment>Dữ liệu đầu vào không hợp lệ</comment>
   </data>
 </root>

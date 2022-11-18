@@ -25,7 +25,7 @@ namespace MISA.AMIS.KeToan.DL
         #endregion
 
         #region Methods
-       
+
 
         /// <summary>
         /// API lấy danh sách nhân viên theo bộ lọc và phân trang
@@ -40,7 +40,7 @@ namespace MISA.AMIS.KeToan.DL
         public PagingResult GetEmployeesByFilterAndPaging(string keyword, int limit, int offset, string sort)
         {
 
-            
+
 
             //Chuẩn bị câu lệnh SQL
             string storedProcedureName = Procedure.GET_EMPLOYEES_BY_FILTER_PAGING;
@@ -53,7 +53,7 @@ namespace MISA.AMIS.KeToan.DL
             parameters.Add("@KeySearch", keyword);
 
             //Khởi tạo kết nối tới DB MySQL
-            using(var mySqlConnection = new MySqlConnection(connectionString) )
+            using (var mySqlConnection = new MySqlConnection(connectionString))
             {
                 //Thực hiện gọi vào DB
                 var results = mySqlConnection.QueryMultiple(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
@@ -72,6 +72,7 @@ namespace MISA.AMIS.KeToan.DL
                         TotalPages = TotalPages
                     };
                 }
+                // không có bản ghi nào trong db
                 return new PagingResult
                 {
                     Data = new List<Employee>(),
@@ -100,27 +101,14 @@ namespace MISA.AMIS.KeToan.DL
             //Chuẩn bị tham số đầu vào
             var parameters = new DynamicParameters();
             var newEmployeeID = Guid.NewGuid();
-            parameters.Add("@EmployeeID", newEmployeeID);
-            parameters.Add("@EmployeeCode", employee.EmployeeCode);
-            parameters.Add("@EmployeeName", employee.EmployeeName);
-            parameters.Add("@DepartmentID", employee.DepartmentID);
-            parameters.Add("@JobPositionName", employee.JobPositionName);
-            parameters.Add("@Gender", employee.Gender);
-            parameters.Add("@DateofBirth", employee.DateOfBirth);
-            parameters.Add("@IdentityNumber", employee.IdentityNumber);
-            parameters.Add("@IdentityDate", employee.IdentityDate);
-            parameters.Add("@IdentityPlace", employee.IdentityPlace);
-            parameters.Add("@Address", employee.Address);
-            parameters.Add("@PhoneNumber", employee.PhoneNumber);
-            parameters.Add("@TelephoneNumber", employee.TelephoneNumber);
-            parameters.Add("@Email", employee.Email);
-            parameters.Add("@BankAccountNumber", employee.BankAccountNumber);
-            parameters.Add("@BankName", employee.BankName);
-            parameters.Add("@BankBranchName", employee.BankBranchName);
-            parameters.Add("@CreatedDate", employee.CreatedDate);
-            parameters.Add("@CreatedBy", employee.CreatedBy);
-            parameters.Add("@UpdatedDate", employee.UpdatedDate);
-            parameters.Add("@UpdatedBy", employee.UpdatedBy);
+            employee.EmployeeID = newEmployeeID;
+
+            // map property của employee với tham số truyền vào database
+            foreach (var prop in employee.GetType().GetProperties())
+            {
+
+                parameters.Add("@" + prop.Name, prop.GetValue(employee, null));
+            }
 
             // Khởi tạo kết nối tới DB MySQL
             using (var mySqlConnection = new MySqlConnection(connectionString))
@@ -152,24 +140,32 @@ namespace MISA.AMIS.KeToan.DL
 
             //Chuẩn bị tham số đầu vào
             var parameters = new DynamicParameters();
-            parameters.Add("@EmployeeID", employeeID);
-            parameters.Add("@EmployeeCode", employee.EmployeeCode);
-            parameters.Add("@EmployeeName", employee.EmployeeName);
-            parameters.Add("@DepartmentID", employee.DepartmentID);
-            parameters.Add("@JobPositionName", employee.JobPositionName);
-            parameters.Add("@Gender", employee.Gender);
-            parameters.Add("@DateOfBirth", employee.DateOfBirth);
-            parameters.Add("@IdetityNumber", employee.IdentityNumber);
-            parameters.Add("@IdetityDate", employee.IdentityDate);
-            parameters.Add("@IdentityPlace", employee.IdentityPlace);
-            parameters.Add("@Address", employee.Address);
-            parameters.Add("@PhoneNumber", employee.PhoneNumber);
-            parameters.Add("@TelephoneNumber", employee.TelephoneNumber);
-            parameters.Add("@Email", employee.Email);
-            parameters.Add("@BankAccountNumber", employee.BankAccountNumber);
-            parameters.Add("@BankName", employee.BankName);
-            parameters.Add("@BankBranchName", employee.BankBranchName);
-            parameters.Add("@UpdatedBy", employee.UpdatedBy);
+            employee.EmployeeID = employeeID;
+
+            // map property của employee với tham số truyền vào database
+            foreach (var prop in employee.GetType().GetProperties())
+            {
+
+                parameters.Add("@" + prop.Name, prop.GetValue(employee, null));
+            }
+            //parameters.Add("@EmployeeID", employeeID);
+            //parameters.Add("@EmployeeCode", employee.EmployeeCode);
+            //parameters.Add("@EmployeeName", employee.EmployeeName);
+            //parameters.Add("@DepartmentID", employee.DepartmentID);
+            //parameters.Add("@JobPositionName", employee.JobPositionName);
+            //parameters.Add("@Gender", employee.Gender);
+            //parameters.Add("@DateOfBirth", employee.DateOfBirth);
+            //parameters.Add("@IdentityNumber", employee.IdentityNumber);
+            //parameters.Add("@IdentityDate", employee.IdentityDate);
+            //parameters.Add("@IdentityPlace", employee.IdentityPlace);
+            //parameters.Add("@Address", employee.Address);
+            //parameters.Add("@PhoneNumber", employee.PhoneNumber);
+            //parameters.Add("@TelephoneNumber", employee.TelephoneNumber);
+            //parameters.Add("@Email", employee.Email);
+            //parameters.Add("@BankAccountNumber", employee.BankAccountNumber);
+            //parameters.Add("@BankName", employee.BankName);
+            //parameters.Add("@BankBranchName", employee.BankBranchName);
+            //parameters.Add("@UpdatedBy", employee.UpdatedBy);
 
 
             // Khởi tạo kết nối tới DB MySQL
@@ -255,21 +251,56 @@ namespace MISA.AMIS.KeToan.DL
         /// CreatedBy: VDTIEN (14/11/2022)
         public dynamic GetEmployeeCodeMax()
         {
-            //Khởi tạo kết nối tới DB MySQL
-            string connectionString = "Server=localhost;Port=3306;Database=misa.web09.ctm.vdtien;Uid=root;Pwd=tien.hust;";
-            var mySqlConnection = new MySqlConnection(connectionString);
+
 
             //Chuẩn bị câu lệnh SQL
-            string storedProcedureName = "Proc_employee_GetEmployeeCodeMax";
+            string storedProcedureName = Procedure.GET_EMPLOYEE_CODE_MAX;
 
             //Chuẩn bị tham số đầu vào
 
-            //Thực hiện gọi vào DB
-            string employeeCode = mySqlConnection.QueryFirstOrDefault<string>(storedProcedureName, commandType: System.Data.CommandType.StoredProcedure);
 
-            //Xử lý kết quả trả về
-            // numberOfRowsAffected luôn trả về 0 ??
-            return employeeCode;
+            // Khởi tạo kết nối tới DB MySQL
+            using (var mySqlConnection = new MySqlConnection(connectionString))
+            {
+                //Thực hiện gọi vào DB
+                string employeeCode = mySqlConnection.QueryFirstOrDefault<string>(storedProcedureName, commandType: System.Data.CommandType.StoredProcedure);
+
+                //Xử lý kết quả trả về
+                return employeeCode;
+            }
+        }
+
+        /// <summary>
+        /// Kiểm tra mã nhân viên có trùng hay không
+        /// </summary>
+        /// <param name="EmployeeCode">Mã nhân viên</param>
+        /// <param name="EmployeeID">ID nhên viên</param>
+        /// <returns>true:đã bị trùng; false: không bị trùng</returns>
+        /// CreatedBy:VDTIEN(18/11/2022)
+        public bool checkDuplicateEmployeeCode(string EmployeeCode, Guid? EmployeeID)
+        {
+            //Chuẩn bị câu lệnh SQL
+            string storedProcedureName = Procedure.CHECK_DUPLICATE_EMPLOYEE_CODE;
+
+            //Chuẩn bị tham số đầu vào
+            var parameters = new DynamicParameters();
+            parameters.Add("@EmployeeCode", EmployeeCode);
+            parameters.Add("@EmployeeID", EmployeeID);
+
+            // Khởi tạo kết nối tới DB MySQL
+            using (var mySqlConnection = new MySqlConnection(connectionString))
+            {
+                //Thực hiện gọi vào DB
+                string employeeCode = mySqlConnection.QueryFirstOrDefault<string>(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
+
+                //Xử lý kết quả trả về
+                if (string.IsNullOrEmpty(employeeCode))
+                {
+                    return false;
+                }
+                return true;
+            }
+
         }
 
         #endregion

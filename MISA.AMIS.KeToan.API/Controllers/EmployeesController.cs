@@ -12,7 +12,10 @@ using MISA.AMIS.KeToan.BL;
 using System.Net.WebSockets;
 using MISA.AMIS.KeToan.Common;
 using MISA.AMIS.KeToan.Common.Enums;
+using MISA.AMIS.KeToan.Common.Resources;
 using MISA.AMIS.KeToan.DL;
+using System.Reflection;
+using System.Dynamic;
 
 namespace MISA.AMIS.KeToan.API.Controllers
 {
@@ -54,7 +57,7 @@ namespace MISA.AMIS.KeToan.API.Controllers
                 {
                     return StatusCode(StatusCodes.Status200OK, employeeCode);
                 }
-                return StatusCode(StatusCodes.Status200OK ,"NV00000");
+                return StatusCode(StatusCodes.Status200OK ,"0");
 
                 //Thành công: trả về dữ liệu cho FE
 
@@ -66,9 +69,9 @@ namespace MISA.AMIS.KeToan.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
                 {
                     ErrorCode = AMISErrorCode.Exception,
-                    DevMsg = Resources.DevMsg_Exception,
-                    UserMsg = Resources.UserMsg_Exception,
-                    MoreInfo = Resources.MoreInfo_Exception,
+                    DevMsg = ResourceVN.DevMsg_Exception,
+                    UserMsg = ResourceVN.UserMsg_Exception,
+                    MoreInfo = ResourceVN.MoreInfo_Exception,
                     TraceId = HttpContext.TraceIdentifier
                 });
             }
@@ -97,56 +100,16 @@ namespace MISA.AMIS.KeToan.API.Controllers
         {
             try
             {
-                //Khởi tạo kết nối tới DB MySQL
-                string connectionString = "Server=localhost;Port=3306;Database=misa.web09.ctm.vdtien;Uid=root;Pwd=tien.hust;";
-                var mySqlConnection = new MySqlConnection(connectionString);
-
-                //Chuẩn bị câu lệnh SQL
-                string storedProcedureName = "Proc_employee_Pagination";
-
-                //Chuẩn bị tham số đầu vào
-                var parameters = new DynamicParameters();
-                parameters.Add("@Limit", limit);
-                parameters.Add("@Offset", offset);
-                parameters.Add("@Sort", sort);
-                parameters.Add("@KeySearch", keyword);
-
-                //Thực hiện gọi vào DB
-                var results = mySqlConnection.QueryMultiple(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
-
-                var employees = results.Read<dynamic>().ToList();
-                long TotalRecords = results.Read<long>().Single();
-                long TotalPages = (long)Math.Ceiling((double)TotalRecords /limit);
+                var result = _employeeBL.GetEmployeesByFilterAndPaging(keyword, limit, offset, sort);
                 //Xử lý kết quả trả về
-                //Thành công: trả về dữ liệu cho FE
-                if (employees != null)
-                {
-                    return StatusCode(StatusCodes.Status200OK, new 
-                    {
-                        Data = employees,
-                        TotalRecords,
-                        TotalPages
-                    });
-                }
-                //Thất bại: trả về lỗi
-                return StatusCode(StatusCodes.Status200OK, new
-                {
-                    Data = new List<Employee>(),
-                    TotalRecords = 0,
-                    TotalPages=0
-                }); 
+
+                return StatusCode(StatusCodes.Status200OK, result);
+                
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    ErrorCode = 1,
-                    DevMsg = "Catched an exception.",
-                    UserMsg = "Có lỗi xảy ra! Vui lòng liên hệ với MISA.",
-                    MoreInfo = "https://openapi.misa.com.vn/errorcode/1",
-                    TraceId = HttpContext.TraceIdentifier
-                });
+                return HandleException(e);
             }
 
             //Try catch exception
@@ -164,21 +127,39 @@ namespace MISA.AMIS.KeToan.API.Controllers
 
             try
             {
+                //Bước 1. Validate dữ liệu trả về mã 400 kèm theo các thông tin lỗi
+                var errorMore = validateEmployee(employee);
+                
+
+                if(errorMore.Count > 0)
+                {
+                   
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
+                    {
+                        ErrorCode = AMISErrorCode.InValidData,
+                        DevMsg = ResourceVN.DevMsg_ErrorInsert,
+                        UserMsg = ResourceVN.ValidateError_Input,
+                        MoreInfo = errorMore,
+                        TraceId = HttpContext.TraceIdentifier
+                    });
+                }
+                // thực hiện thêm mới dữ liệu
                 var result = _employeeBL.InsertEmployee(employee);
+
                 //Xử lý kết quả trả về
                 //Thành công: trả về dữ liệu cho FE
                 if (result.numberOfRowsAffected > 0)
-                {
+                { 
                     return StatusCode(StatusCodes.Status201Created, result.EmployeeID);
                 }
 
                 //Thất bại: trả về lỗi
-                return StatusCode(StatusCodes.Status500InternalServerError, new
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
                 {
-                    ErrorCode = 2,
-                    DevMsg = "Database insert failed.",
-                    UserMsg = "Thêm mới nhân viên không thành công !",
-                    MoreInfo = "https://openapi.misa.com.vn/errorcode/1",
+                    ErrorCode = AMISErrorCode.InValidData,
+                    DevMsg = ResourceVN.DevMsg_ErrorInsert,
+                    UserMsg = ResourceVN.UserMsg_ErrorInsert,
+                    MoreInfo = ResourceVN.MoreInfo_ErrorInsert,
                     TraceId = HttpContext.TraceIdentifier
                 });
 
@@ -187,17 +168,12 @@ namespace MISA.AMIS.KeToan.API.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    ErrorCode = 1,
-                    DevMsg = "Catched an exception.",
-                    UserMsg = "Có lỗi xảy ra! Vui lòng liên hệ với MISA.",
-                    MoreInfo = "https://openapi.misa.com.vn/errorcode/1",
-                    TraceId = HttpContext.TraceIdentifier
-                });
+                return HandleException(e);
             }
 
             //Try catch exception
+
+            
         }
 
         /// <summary>
@@ -215,6 +191,23 @@ namespace MISA.AMIS.KeToan.API.Controllers
         {
             try
             {
+
+                //Bước 1. Validate dữ liệu trả về mã 400 kèm theo các thông tin lỗi
+                var errorMore = validateEmployee(employee);
+
+
+                if (errorMore.Count > 0)
+                {
+
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
+                    {
+                        ErrorCode = AMISErrorCode.InValidData,
+                        DevMsg = ResourceVN.DevMsg_ErrorInsert,
+                        UserMsg = ResourceVN.ValidateError_Input,
+                        MoreInfo = errorMore,
+                        TraceId = HttpContext.TraceIdentifier
+                    });
+                }
                 var result = _employeeBL.UpdateEmployee(employeeID, employee);
                 //Xử lý kết quả trả về
                 if (result.numberOfRowsAffected > 0)
@@ -236,14 +229,7 @@ namespace MISA.AMIS.KeToan.API.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    ErrorCode = 1,
-                    DevMsg = "Catched an exception.",
-                    UserMsg = "Có lỗi xảy ra! Vui lòng liên hệ với MISA.",
-                    MoreInfo = "https://openapi.misa.com.vn/errorcode/1",
-                    TraceId = HttpContext.TraceIdentifier
-                });
+                return HandleException(e);
             }
         }
         /// <summary>
@@ -280,14 +266,7 @@ namespace MISA.AMIS.KeToan.API.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    ErrorCode = 1,
-                    DevMsg = "Catched an exception.",
-                    UserMsg = "Có lỗi xảy ra! Vui lòng liên hệ với MISA.",
-                    MoreInfo = "https://openapi.misa.com.vn/errorcode/1",
-                    TraceId = HttpContext.TraceIdentifier
-                });
+                return HandleException(e);
             }
 
             //Try catch exception
@@ -331,18 +310,94 @@ namespace MISA.AMIS.KeToan.API.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    ErrorCode = 1,
-                    DevMsg = "Catched an exception.",
-                    UserMsg = "Có lỗi xảy ra! Vui lòng liên hệ với MISA.",
-                    MoreInfo = "https://openapi.misa.com.vn/errorcode/1",
-                    TraceId = HttpContext.TraceIdentifier
-                });
+                return HandleException(e);
+            }
+        }
+
+
+        /// <summary>
+        /// Kiểm tra định dạng Email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>true: đúng định dang email; false: sai định dạng email</returns>
+        /// CreatedBy:VDTIEN(18/11/2022)
+       private bool IsValidEmail(string email)
+        {
+            var trimmedEmail = email.Trim();
+
+            if (trimmedEmail.EndsWith("."))
+            {
+                return false; // suggested by @TK-421
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == trimmedEmail;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// validate thông tin nhân viên truyền từ fe vào
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns>danh sách các lỗi</returns>
+        /// CreatedBy: VDTIEN (18/11/2022)
+       private Dictionary<string, string> validateEmployee(Employee employee)
+        {
+            var errorMore = new Dictionary<string, string>();
+            //1.1 Thông tin mã số nhân viên không để trống
+            if (string.IsNullOrEmpty(employee.EmployeeCode))
+            {
+                errorMore.Add("EmployeeCode", ResourceVN.ValidateError_EmployeeCodeNotEmpty);
             }
 
+            //1.2 kiểm tra trùng mã nhân viên 
+            bool isDuplicateEmployeeCode = _employeeBL.checkDuplicateEmployeeCode(employee.EmployeeCode, employee.EmployeeID);
+            if (isDuplicateEmployeeCode)
+            {
 
+                errorMore.Add("EmployeeCode", ResourceVN.ValidateError_DuplicateEmployeeCode);
+            }
 
+            //1.3 Thông tin tên nhân viên không để trống
+            if (string.IsNullOrEmpty(employee.EmployeeName))
+            {
+                errorMore.Add("EmployeeName", ResourceVN.ValidateError_EmployeeNameNotEmpty);
+            }
+
+            //1.4 Thông tin phòng ban không để trống
+
+            //1.5 Nếu có email thì email phỉa đúng định dạng
+            if (!string.IsNullOrEmpty(employee.EmployeeName) && !IsValidEmail(employee.Email))
+            {
+                errorMore.Add("Email", ResourceVN.ValidateError_Email);
+            }
+
+            //1.6 Ngày sinh không lớn hơn ngày hiện tại
+
+            return errorMore;
+        }
+
+        /// <summary>
+        /// trả về lỗi 500 exception
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns>trả về lỗi 500 exception</returns>
+        /// CreatedBy: VDTIEN(18/11/2022)
+        private IActionResult HandleException(Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+            {
+                ErrorCode = AMISErrorCode.Exception,
+                DevMsg = e.Message,
+                UserMsg = ResourceVN.UserMsg_Exception,
+                MoreInfo = e.Message,
+                TraceId = HttpContext.TraceIdentifier
+            });
         }
         #endregion
     }

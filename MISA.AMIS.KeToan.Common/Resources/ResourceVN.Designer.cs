@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MISA.AMIS.KeToan.Common {
+namespace MISA.AMIS.KeToan.Common.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace MISA.AMIS.KeToan.Common {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    public class ResourceVN {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal ResourceVN() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace MISA.AMIS.KeToan.Common {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MISA.AMIS.KeToan.Common.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MISA.AMIS.KeToan.Common.Resources.ResourceVN", typeof(ResourceVN).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,29 @@ namespace MISA.AMIS.KeToan.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database insert failed..
+        /// </summary>
+        public static string DevMsg_ErrorInsert {
+            get {
+                return ResourceManager.GetString("DevMsg_ErrorInsert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Catched an exception..
         /// </summary>
         public static string DevMsg_Exception {
             get {
                 return ResourceManager.GetString("DevMsg_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://openapi.misa.com.vn/errorcode/1.
+        /// </summary>
+        public static string MoreInfo_ErrorInsert {
+            get {
+                return ResourceManager.GetString("MoreInfo_ErrorInsert", resourceCulture);
             }
         }
         
@@ -79,11 +97,74 @@ namespace MISA.AMIS.KeToan.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thêm mới nhân viên không thành công !.
+        /// </summary>
+        public static string UserMsg_ErrorInsert {
+            get {
+                return ResourceManager.GetString("UserMsg_ErrorInsert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Có lỗi xảy ra! Vui lòng liên hệ với MISA..
         /// </summary>
         public static string UserMsg_Exception {
             get {
                 return ResourceManager.GetString("UserMsg_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ngày sinh không lớn hơn ngày hiện tại.
+        /// </summary>
+        public static string ValidateError_DateOfBirth {
+            get {
+                return ResourceManager.GetString("ValidateError_DateOfBirth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mã nhân viên không được phép trùng.
+        /// </summary>
+        public static string ValidateError_DuplicateEmployeeCode {
+            get {
+                return ResourceManager.GetString("ValidateError_DuplicateEmployeeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email không đúng định dạng.
+        /// </summary>
+        public static string ValidateError_Email {
+            get {
+                return ResourceManager.GetString("ValidateError_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mã nhân viên không được để trống.
+        /// </summary>
+        public static string ValidateError_EmployeeCodeNotEmpty {
+            get {
+                return ResourceManager.GetString("ValidateError_EmployeeCodeNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tên nhân viên không được để trống.
+        /// </summary>
+        public static string ValidateError_EmployeeNameNotEmpty {
+            get {
+                return ResourceManager.GetString("ValidateError_EmployeeNameNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dữ liệu đầu vào không hợp lệ.
+        /// </summary>
+        public static string ValidateError_Input {
+            get {
+                return ResourceManager.GetString("ValidateError_Input", resourceCulture);
             }
         }
     }

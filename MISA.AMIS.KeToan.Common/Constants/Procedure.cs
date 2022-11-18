@@ -36,11 +36,18 @@ namespace MISA.AMIS.KeToan.Common
         /// <summary>
         /// Procedure cập nhật nhân viên theo id
         /// </summary>
-        public static string UPDATE_EMPLOYEE_BY_ID = "Pro_employee_UpdateById";
+        public static string UPDATE_EMPLOYEE_BY_ID = "Proc_employee_UpdateById";
 
         /// <summary>
         /// Procdure xóa nhân viên hàng loạt
         /// </summary>
         public static string DELETE_BATCH_EMPLOYEE = "Proc_employee_deleteMultiEmployee";
+        
+        /// <summary>
+        /// Procedure trả về mã số nhân viên lớn nhất
+        /// </summary>
+        public static string GET_EMPLOYEE_CODE_MAX = "Proc_employee_GetEmployeeCodeMax";
+
+        public static string CHECK_DUPLICATE_EMPLOYEE_CODE = "Proc_employee_checkDuplicateEmployeeCode";
     }
 }
