@@ -79,6 +79,15 @@ namespace MISA.AMIS.KeToan.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to input invalid.
+        /// </summary>
+        public static string DevMsg_InValidData {
+            get {
+                return ResourceManager.GetString("DevMsg_InValidData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://openapi.misa.com.vn/errorcode/1.
         /// </summary>
         public static string MoreInfo_ErrorInsert {

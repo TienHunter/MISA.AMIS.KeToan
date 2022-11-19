@@ -1,8 +1,12 @@
 ﻿using MISA.AMIS.KeToan.Common.Entities;
+using MISA.AMIS.KeToan.Common.Enums;
+using MISA.AMIS.KeToan.Common.Exceptions;
+using MISA.AMIS.KeToan.Common.Resources;
 using MISA.AMIS.KeToan.DL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,6 +37,23 @@ namespace MISA.AMIS.KeToan.BL
         /// Created by: VDTien (01/11/2022)
         public dynamic InsertEmployee(Employee employee)
         {
+            // thực hiện validate dữ liệu
+            var errorMore = validateEmployee(employee);
+            if(errorMore.Count > 0)
+            {
+                throw new ValidateException(errorMore);
+            }
+
+            // kiểm tra trùng mã 
+            var isDuplicate = checkDuplicateEmployeeCode(employee.EmployeeCode, null);
+            if(isDuplicate == true)
+            {
+                var errorMoreDup = new Dictionary<string, string>();
+                errorMoreDup.Add("EmployeeCode", ResourceVN.ValidateError_DuplicateEmployeeCode);
+                throw new DuplicateException(errorMoreDup);
+            }
+
+            // thực hiện thêm mới dữ liệu   
             return _employeeDL.InsertEmployee(employee);
         }
 
@@ -45,6 +66,22 @@ namespace MISA.AMIS.KeToan.BL
         /// CreatedBy: VDTien (1/11/2022)
         public dynamic UpdateEmployee(Guid employeeID, Employee employee)
         {
+            // thực hiện validate dữ liệu
+            var errorMore = validateEmployee(employee);
+            if (errorMore.Count > 0)
+            {
+                throw new ValidateException(errorMore);
+            }
+
+            // kiểm tra trùng mã 
+            var isDuplicate = checkDuplicateEmployeeCode(employee.EmployeeCode, employeeID);
+            if (isDuplicate == true)
+            {
+                var errorMoreDup = new Dictionary<string, string>();
+                errorMoreDup.Add("EmployeeCode", ResourceVN.ValidateError_DuplicateEmployeeCode);
+                throw new DuplicateException(errorMoreDup);
+            }
+
             return _employeeDL.UpdateEmployee(employeeID, employee);
         }
 
@@ -107,5 +144,68 @@ namespace MISA.AMIS.KeToan.BL
         {
             return _employeeDL.GetEmployeesByFilterAndPaging(keyword, limit, offset, sort);
         }
+
+        /// <summary>
+        /// Kiểm tra định dạng Email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>true: đúng định dang email; false: sai định dạng email</returns>
+        /// CreatedBy:VDTIEN(18/11/2022)
+        private bool IsValidEmail(string email)
+        {
+            var trimmedEmail = email.Trim();
+
+            if (trimmedEmail.EndsWith("."))
+            {
+                return false; // suggested by @TK-421
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == trimmedEmail;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// validate thông tin nhân viên truyền từ fe vào
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns>danh sách các lỗi</returns>
+        /// CreatedBy: VDTIEN (18/11/2022)
+        private Dictionary<string, string> validateEmployee(Employee employee)
+        {
+            var errorMore = new Dictionary<string, string>();
+            //1.1 Thông tin mã số nhân viên không để trống
+            if (string.IsNullOrEmpty(employee.EmployeeCode))
+            {
+                errorMore.Add("EmployeeCode", ResourceVN.ValidateError_EmployeeCodeNotEmpty);
+            }
+
+            //1.3 Thông tin tên nhân viên không để trống
+            if (string.IsNullOrEmpty(employee.EmployeeName))
+            {
+                errorMore.Add("EmployeeName", ResourceVN.ValidateError_EmployeeNameNotEmpty);
+            }
+
+            //1.4 Thông tin phòng ban không để trống
+
+            //1.5 Nếu có email thì email phỉa đúng định dạng
+            if (!string.IsNullOrEmpty(employee.Email) && !IsValidEmail(employee.Email))
+            {
+                errorMore.Add("Email", ResourceVN.ValidateError_Email);
+            }
+
+            //1.6 Ngày sinh không lớn hơn ngày hiện tại
+            if(!employee.DateOfBirth.HasValue && employee.DateOfBirth > DateTime.Now)
+            {
+                errorMore.Add("DateOfBirth", ResourceVN.ValidateError_DateOfBirth);
+            }
+            return errorMore;
+        }
+
     }
 }

@@ -125,6 +125,10 @@
     <value>Catched an exception.</value>
     <comment>Message trả về cho dev khi gọi API gặp exception</comment>
   </data>
+  <data name="DevMsg_InValidData" xml:space="preserve">
+    <value>input invalid</value>
+    <comment>Dữ liệu đầu vào không hợp lệ</comment>
+  </data>
   <data name="MoreInfo_ErrorInsert" xml:space="preserve">
     <value>https://openapi.misa.com.vn/errorcode/1</value>
     <comment>Thông tin chi tiết của lỗi khi gọi API insert thất bại</comment>

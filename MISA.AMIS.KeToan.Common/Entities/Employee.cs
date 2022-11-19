@@ -50,7 +50,7 @@ namespace MISA.AMIS.KeToan.Common.Entities
         /// <summary>
         /// id phòng bàn
         /// </summary>
-        public string DepartmentName { get; set; }
+        public string? DepartmentName { get; set; }
         /// <summary>
         /// tên chức danh
         /// </summary>

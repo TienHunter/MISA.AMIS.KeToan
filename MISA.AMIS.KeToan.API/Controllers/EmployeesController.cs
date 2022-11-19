@@ -16,6 +16,7 @@ using MISA.AMIS.KeToan.Common.Resources;
 using MISA.AMIS.KeToan.DL;
 using System.Reflection;
 using System.Dynamic;
+using MISA.AMIS.KeToan.Common.Exceptions;
 
 namespace MISA.AMIS.KeToan.API.Controllers
 {
@@ -127,22 +128,6 @@ namespace MISA.AMIS.KeToan.API.Controllers
 
             try
             {
-                //Bước 1. Validate dữ liệu trả về mã 400 kèm theo các thông tin lỗi
-                var errorMore = validateEmployee(employee);
-                
-
-                if(errorMore.Count > 0)
-                {
-                   
-                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
-                    {
-                        ErrorCode = AMISErrorCode.InValidData,
-                        DevMsg = ResourceVN.DevMsg_ErrorInsert,
-                        UserMsg = ResourceVN.ValidateError_Input,
-                        MoreInfo = errorMore,
-                        TraceId = HttpContext.TraceIdentifier
-                    });
-                }
                 // thực hiện thêm mới dữ liệu
                 var result = _employeeBL.InsertEmployee(employee);
 
@@ -164,6 +149,30 @@ namespace MISA.AMIS.KeToan.API.Controllers
                 });
 
 
+            }
+            catch(ValidateException e)
+            {
+                Console.WriteLine(e.errorMore);
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
+                   {
+                       ErrorCode = AMISErrorCode.InValidData,
+                       DevMsg = ResourceVN.DevMsg_InValidData,
+                       UserMsg = ResourceVN.ValidateError_Input,
+                      MoreInfo = e.errorMore,
+                       TraceId = HttpContext.TraceIdentifier
+                   });
+            }
+            catch(DuplicateException e)
+            {
+                Console.WriteLine(e.errorMore);
+                return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
+                {
+                    ErrorCode = AMISErrorCode.DuplicateCode,
+                    DevMsg = ResourceVN.DevMsg_ErrorInsert,
+                    UserMsg = ResourceVN.ValidateError_DuplicateEmployeeCode,
+                    MoreInfo = e.errorMore,
+                    TraceId = HttpContext.TraceIdentifier
+                });
             }
             catch (Exception e)
             {
@@ -192,22 +201,7 @@ namespace MISA.AMIS.KeToan.API.Controllers
             try
             {
 
-                //Bước 1. Validate dữ liệu trả về mã 400 kèm theo các thông tin lỗi
-                var errorMore = validateEmployee(employee);
-
-
-                if (errorMore.Count > 0)
-                {
-
-                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
-                    {
-                        ErrorCode = AMISErrorCode.InValidData,
-                        DevMsg = ResourceVN.DevMsg_ErrorInsert,
-                        UserMsg = ResourceVN.ValidateError_Input,
-                        MoreInfo = errorMore,
-                        TraceId = HttpContext.TraceIdentifier
-                    });
-                }
+                // thực hiện update dữ liệu
                 var result = _employeeBL.UpdateEmployee(employeeID, employee);
                 //Xử lý kết quả trả về
                 if (result.numberOfRowsAffected > 0)
@@ -225,6 +219,30 @@ namespace MISA.AMIS.KeToan.API.Controllers
                 });
 
                 //Thất bại: trả về lỗi
+            }
+            catch (ValidateException e)
+            {
+                Console.WriteLine(e.errorMore);
+                return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
+                {
+                    ErrorCode = AMISErrorCode.InValidData,
+                    DevMsg = ResourceVN.DevMsg_ErrorInsert,
+                    UserMsg = ResourceVN.ValidateError_Input,
+                    MoreInfo = e.errorMore,
+                    TraceId = HttpContext.TraceIdentifier
+                });
+            }
+            catch (DuplicateException e)
+            {
+                Console.WriteLine(e.errorMore);
+                return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
+                {
+                    ErrorCode = AMISErrorCode.DuplicateCode,
+                    DevMsg = ResourceVN.DevMsg_ErrorInsert,
+                    UserMsg = ResourceVN.ValidateError_DuplicateEmployeeCode,
+                    MoreInfo = e.errorMore,
+                    TraceId = HttpContext.TraceIdentifier
+                });
             }
             catch (Exception e)
             {
@@ -312,74 +330,6 @@ namespace MISA.AMIS.KeToan.API.Controllers
                 Console.WriteLine(e.Message);
                 return HandleException(e);
             }
-        }
-
-
-        /// <summary>
-        /// Kiểm tra định dạng Email
-        /// </summary>
-        /// <param name="email"></param>
-        /// <returns>true: đúng định dang email; false: sai định dạng email</returns>
-        /// CreatedBy:VDTIEN(18/11/2022)
-       private bool IsValidEmail(string email)
-        {
-            var trimmedEmail = email.Trim();
-
-            if (trimmedEmail.EndsWith("."))
-            {
-                return false; // suggested by @TK-421
-            }
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == trimmedEmail;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// validate thông tin nhân viên truyền từ fe vào
-        /// </summary>
-        /// <param name="employee"></param>
-        /// <returns>danh sách các lỗi</returns>
-        /// CreatedBy: VDTIEN (18/11/2022)
-       private Dictionary<string, string> validateEmployee(Employee employee)
-        {
-            var errorMore = new Dictionary<string, string>();
-            //1.1 Thông tin mã số nhân viên không để trống
-            if (string.IsNullOrEmpty(employee.EmployeeCode))
-            {
-                errorMore.Add("EmployeeCode", ResourceVN.ValidateError_EmployeeCodeNotEmpty);
-            }
-
-            //1.2 kiểm tra trùng mã nhân viên 
-            bool isDuplicateEmployeeCode = _employeeBL.checkDuplicateEmployeeCode(employee.EmployeeCode, employee.EmployeeID);
-            if (isDuplicateEmployeeCode)
-            {
-
-                errorMore.Add("EmployeeCode", ResourceVN.ValidateError_DuplicateEmployeeCode);
-            }
-
-            //1.3 Thông tin tên nhân viên không để trống
-            if (string.IsNullOrEmpty(employee.EmployeeName))
-            {
-                errorMore.Add("EmployeeName", ResourceVN.ValidateError_EmployeeNameNotEmpty);
-            }
-
-            //1.4 Thông tin phòng ban không để trống
-
-            //1.5 Nếu có email thì email phỉa đúng định dạng
-            if (!string.IsNullOrEmpty(employee.EmployeeName) && !IsValidEmail(employee.Email))
-            {
-                errorMore.Add("Email", ResourceVN.ValidateError_Email);
-            }
-
-            //1.6 Ngày sinh không lớn hơn ngày hiện tại
-
-            return errorMore;
         }
 
         /// <summary>

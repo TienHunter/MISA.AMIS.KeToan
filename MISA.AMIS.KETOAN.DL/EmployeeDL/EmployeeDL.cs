@@ -148,25 +148,6 @@ namespace MISA.AMIS.KeToan.DL
 
                 parameters.Add("@" + prop.Name, prop.GetValue(employee, null));
             }
-            //parameters.Add("@EmployeeID", employeeID);
-            //parameters.Add("@EmployeeCode", employee.EmployeeCode);
-            //parameters.Add("@EmployeeName", employee.EmployeeName);
-            //parameters.Add("@DepartmentID", employee.DepartmentID);
-            //parameters.Add("@JobPositionName", employee.JobPositionName);
-            //parameters.Add("@Gender", employee.Gender);
-            //parameters.Add("@DateOfBirth", employee.DateOfBirth);
-            //parameters.Add("@IdentityNumber", employee.IdentityNumber);
-            //parameters.Add("@IdentityDate", employee.IdentityDate);
-            //parameters.Add("@IdentityPlace", employee.IdentityPlace);
-            //parameters.Add("@Address", employee.Address);
-            //parameters.Add("@PhoneNumber", employee.PhoneNumber);
-            //parameters.Add("@TelephoneNumber", employee.TelephoneNumber);
-            //parameters.Add("@Email", employee.Email);
-            //parameters.Add("@BankAccountNumber", employee.BankAccountNumber);
-            //parameters.Add("@BankName", employee.BankName);
-            //parameters.Add("@BankBranchName", employee.BankBranchName);
-            //parameters.Add("@UpdatedBy", employee.UpdatedBy);
-
 
             // Khởi tạo kết nối tới DB MySQL
             using (var mySqlConnection = new MySqlConnection(connectionString))
