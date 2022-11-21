@@ -1,4 +1,5 @@
 ﻿using MISA.AMIS.KeToan.Common.Entities;
+using MISA.AMIS.KeToan.Common.Entities.DTO;
 using MISA.AMIS.KeToan.Common.Enums;
 using MISA.AMIS.KeToan.Common.Exceptions;
 using MISA.AMIS.KeToan.Common.Resources;
@@ -35,7 +36,7 @@ namespace MISA.AMIS.KeToan.BL
         /// <param name="employee">Đối tượng nhân viên cần thêm mới</param>
         /// <returns>ID nhân viên vừa thêm mới</returns>
         /// Created by: VDTien (01/11/2022)
-        public dynamic InsertEmployee(Employee employee)
+        public ActionResult InsertEmployee(Employee employee)
         {
             // thực hiện validate dữ liệu
             var errorMore = validateEmployee(employee);
@@ -49,7 +50,7 @@ namespace MISA.AMIS.KeToan.BL
             if(isDuplicate == true)
             {
                 var errorMoreDup = new Dictionary<string, string>();
-                errorMoreDup.Add("EmployeeCode", ResourceVN.ValidateError_DuplicateEmployeeCode);
+                errorMoreDup.Add("EmployeeCode", ResourceVN.UserMsg_DuplicateEmployeeCode);
                 throw new DuplicateException(errorMoreDup);
             }
 
@@ -64,7 +65,7 @@ namespace MISA.AMIS.KeToan.BL
         /// <param name="employee">Đối tượng nhân viên muốn sửa</param>
         /// <returns>ID của nhân viên vừa sửa</returns>
         /// CreatedBy: VDTien (1/11/2022)
-        public dynamic UpdateEmployee(Guid employeeID, Employee employee)
+        public ActionResult UpdateEmployee(Guid employeeID, Employee employee)
         {
             // thực hiện validate dữ liệu
             var errorMore = validateEmployee(employee);
@@ -78,7 +79,7 @@ namespace MISA.AMIS.KeToan.BL
             if (isDuplicate == true)
             {
                 var errorMoreDup = new Dictionary<string, string>();
-                errorMoreDup.Add("EmployeeCode", ResourceVN.ValidateError_DuplicateEmployeeCode);
+                errorMoreDup.Add("EmployeeCode", ResourceVN.UserMsg_DuplicateEmployeeCode);
                 throw new DuplicateException(errorMoreDup);
             }
 
@@ -101,9 +102,9 @@ namespace MISA.AMIS.KeToan.BL
         /// <param name="employeeID">ID nhân viên muốn xóa</param>
         /// <returns>ID nhân viên vừa xóa</returns>
         /// CreatedBy: VDTien (1/11/2022)
-        public dynamic DeleteEmployeeByID(Guid employeeID)
+        public async Task<ActionResult> DeleteEmployeeByID(Guid employeeID)
         {
-            return _employeeDL.DeleteEmployeeByID(employeeID);
+            return await _employeeDL.DeleteEmployeeByID(employeeID);
         }
 
         /// <summary>

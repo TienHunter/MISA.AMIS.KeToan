@@ -61,6 +61,33 @@ namespace MISA.AMIS.KeToan.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database delete batch record failed.
+        /// </summary>
+        public static string DevMsg_DeleteBatchEmployee {
+            get {
+                return ResourceManager.GetString("DevMsg_DeleteBatchEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database delete record failed..
+        /// </summary>
+        public static string DevMsg_DeleteEmployeeFailed {
+            get {
+                return ResourceManager.GetString("DevMsg_DeleteEmployeeFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to duplicate EmployeeCode.
+        /// </summary>
+        public static string DevMsg_DuplicateEmployeeCode {
+            get {
+                return ResourceManager.GetString("DevMsg_DuplicateEmployeeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database insert failed..
         /// </summary>
         public static string DevMsg_ErrorInsert {
@@ -88,6 +115,15 @@ namespace MISA.AMIS.KeToan.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database update failed.
+        /// </summary>
+        public static string DevMsg_UpdateFailed {
+            get {
+                return ResourceManager.GetString("DevMsg_UpdateFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://openapi.misa.com.vn/errorcode/1.
         /// </summary>
         public static string MoreInfo_ErrorInsert {
@@ -106,7 +142,43 @@ namespace MISA.AMIS.KeToan.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thêm mới nhân viên không thành công !.
+        ///   Looks up a localized string similar to https://openapi.misa.com.vn/errorcode/1.
+        /// </summary>
+        public static string MoreInfo_UpdateFailed {
+            get {
+                return ResourceManager.GetString("MoreInfo_UpdateFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Xóa hàng loạt nhân viên thất bại.
+        /// </summary>
+        public static string UserMsg_DeleteBatchEmployee {
+            get {
+                return ResourceManager.GetString("UserMsg_DeleteBatchEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Xóa nhân viên thất bại.
+        /// </summary>
+        public static string UserMsg_DeleteEmployeeFailed {
+            get {
+                return ResourceManager.GetString("UserMsg_DeleteEmployeeFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mã nhân viên đã tồn tại trong hệ thống vui lòng kiểm tra lại.
+        /// </summary>
+        public static string UserMsg_DuplicateEmployeeCode {
+            get {
+                return ResourceManager.GetString("UserMsg_DuplicateEmployeeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thêm mới nhân viên thất bại !.
         /// </summary>
         public static string UserMsg_ErrorInsert {
             get {
@@ -124,20 +196,20 @@ namespace MISA.AMIS.KeToan.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chỉnh sửa nhân viên thất bại.
+        /// </summary>
+        public static string UserMsg_UpdateFailed {
+            get {
+                return ResourceManager.GetString("UserMsg_UpdateFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ngày sinh không lớn hơn ngày hiện tại.
         /// </summary>
         public static string ValidateError_DateOfBirth {
             get {
                 return ResourceManager.GetString("ValidateError_DateOfBirth", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mã nhân viên không được phép trùng.
-        /// </summary>
-        public static string ValidateError_DuplicateEmployeeCode {
-            get {
-                return ResourceManager.GetString("ValidateError_DuplicateEmployeeCode", resourceCulture);
             }
         }
         

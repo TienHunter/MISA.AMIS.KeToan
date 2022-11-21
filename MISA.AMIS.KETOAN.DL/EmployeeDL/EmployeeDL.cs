@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using MISA.AMIS.KeToan.Common;
 using MISA.AMIS.KeToan.Common.Entities;
+using MISA.AMIS.KeToan.Common.Entities.DTO;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
@@ -92,7 +93,7 @@ namespace MISA.AMIS.KeToan.DL
         /// <param name="employee">Đối tượng nhân viên cần thêm mới</param>
         /// <returns>ID nhân viên vừa thêm mới, số bản ghi bị ảnh hưởng</returns>
         /// Created by: VDTien (01/11/2022)
-        public dynamic InsertEmployee(Employee employee)
+        public ActionResult InsertEmployee(Employee employee)
         {
 
             //Chuẩn bị câu lệnh SQL
@@ -117,10 +118,13 @@ namespace MISA.AMIS.KeToan.DL
                 int numberOfRowsAffected = mySqlConnection.Execute(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
 
                 //Xử lý kết quả trả về
-                dynamic result = new ExpandoObject();
-                result.EmployeeID = newEmployeeID;
-                result.numberOfRowsAffected = numberOfRowsAffected;
-                return result;
+
+
+                return new ActionResult
+                {
+                    EmployeeID = newEmployeeID,
+                    numberOfRowsAffected = numberOfRowsAffected
+                };
             }
 
         }
@@ -132,7 +136,7 @@ namespace MISA.AMIS.KeToan.DL
         /// <param name="employee">Đối tượng nhân viên muốn sửa</param>
         /// <returns>ID của nhân viên vừa sửa</returns>
         /// CreatedBy: VDTien (1/11/2022)
-        public dynamic UpdateEmployee(Guid employeeID, Employee employee)
+        public ActionResult UpdateEmployee(Guid employeeID, Employee employee)
         {
 
             //Chuẩn bị câu lệnh SQL
@@ -156,10 +160,11 @@ namespace MISA.AMIS.KeToan.DL
                 int numberOfRowsAffected = mySqlConnection.Execute(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
 
                 //Xử lý kết quả trả về
-                dynamic result = new ExpandoObject();
-                result.EmployeeID = employeeID;
-                result.numberOfRowsAffected = numberOfRowsAffected;
-                return result;
+                return new ActionResult
+                {
+                    EmployeeID = employeeID,
+                    numberOfRowsAffected = numberOfRowsAffected
+                };
             }
         }
 
@@ -169,7 +174,7 @@ namespace MISA.AMIS.KeToan.DL
         /// <param name="employeeID">ID nhân viên muốn xóa</param>
         /// <returns>ID nhân viên vừa xóa</returns>
         /// CreatedBy: VDTien (1/11/2022)
-        public dynamic DeleteEmployeeByID(Guid employeeID)
+        public async Task<ActionResult> DeleteEmployeeByID(Guid employeeID)
         {
 
             //Chuẩn bị câu lệnh SQL
@@ -186,10 +191,11 @@ namespace MISA.AMIS.KeToan.DL
                 int numberOfRowsAffected = mySqlConnection.Execute(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
 
                 //Xử lý kết quả trả về
-                dynamic result = new ExpandoObject();
-                result.EmployeeID = employeeID;
-                result.numberOfRowsAffected = numberOfRowsAffected;
-                return result;
+                return new ActionResult
+                {
+                    EmployeeID = employeeID,
+                    numberOfRowsAffected = numberOfRowsAffected
+                };
             }
 
         }
@@ -230,7 +236,7 @@ namespace MISA.AMIS.KeToan.DL
         /// </summary>
         /// <returns>mã nhân viên lớn nhất</returns>
         /// CreatedBy: VDTIEN (14/11/2022)
-        public dynamic GetEmployeeCodeMax()
+        public string GetEmployeeCodeMax()
         {
 
 

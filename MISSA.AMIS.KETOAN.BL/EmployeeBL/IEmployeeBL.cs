@@ -1,4 +1,5 @@
 ﻿using MISA.AMIS.KeToan.Common.Entities;
+using MISA.AMIS.KeToan.Common.Entities.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace MISA.AMIS.KeToan.BL
         /// <param name="employee">Đối tượng nhân viên cần thêm mới</param>
         /// <returns>ID nhân viên vừa thêm mới</returns>
         /// Created by: VDTien (01/11/2022)
-        public dynamic InsertEmployee(Employee employee);
+        public ActionResult InsertEmployee(Employee employee);
 
         /// <summary>
         /// API sửa thông tin nhân viên theo ID
@@ -25,7 +26,7 @@ namespace MISA.AMIS.KeToan.BL
         /// <param name="employee">Đối tượng nhân viên muốn sửa</param>
         /// <returns>ID của nhân viên vừa sửa</returns>
         /// CreatedBy: VDTien (1/11/2022)
-        public dynamic UpdateEmployee(Guid employeeID, Employee employee);
+        public ActionResult UpdateEmployee(Guid employeeID, Employee employee);
 
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace MISA.AMIS.KeToan.BL
         /// <param name="employeeID">ID nhân viên muốn xóa</param>
         /// <returns>ID nhân viên vừa xóa</returns>
         /// CreatedBy: VDTien (1/11/2022)
-        public dynamic DeleteEmployeeByID(Guid employeeID);
+        public Task<ActionResult> DeleteEmployeeByID(Guid employeeID);
 
         /// <summary>
         /// API xóa nhiều nhân viên theo danh sách ID

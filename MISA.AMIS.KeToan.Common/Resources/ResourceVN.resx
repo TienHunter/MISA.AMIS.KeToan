@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DevMsg_DeleteBatchEmployee" xml:space="preserve">
+    <value>Database delete batch record failed</value>
+  </data>
+  <data name="DevMsg_DeleteEmployeeFailed" xml:space="preserve">
+    <value>Database delete record failed.</value>
+  </data>
+  <data name="DevMsg_DuplicateEmployeeCode" xml:space="preserve">
+    <value>duplicate EmployeeCode</value>
+  </data>
   <data name="DevMsg_ErrorInsert" xml:space="preserve">
     <value>Database insert failed.</value>
     <comment>Message trả về cho dev khi gọi API insert thất bại</comment>
@@ -129,6 +138,10 @@
     <value>input invalid</value>
     <comment>Dữ liệu đầu vào không hợp lệ</comment>
   </data>
+  <data name="DevMsg_UpdateFailed" xml:space="preserve">
+    <value>Database update failed</value>
+    <comment>Message trả về cho dev khi gọi API update thất bại</comment>
+  </data>
   <data name="MoreInfo_ErrorInsert" xml:space="preserve">
     <value>https://openapi.misa.com.vn/errorcode/1</value>
     <comment>Thông tin chi tiết của lỗi khi gọi API insert thất bại</comment>
@@ -137,21 +150,35 @@
     <value>https://openapi.misa.com.vn/errorcode/1</value>
     <comment>Thông tin chi tiết của lỗi khi gọi API gặp exception</comment>
   </data>
+  <data name="MoreInfo_UpdateFailed" xml:space="preserve">
+    <value>https://openapi.misa.com.vn/errorcode/1</value>
+    <comment>Thông tin chi tiết của lỗi khi gọi API update thất bại</comment>
+  </data>
+  <data name="UserMsg_DeleteBatchEmployee" xml:space="preserve">
+    <value>Xóa hàng loạt nhân viên thất bại</value>
+  </data>
+  <data name="UserMsg_DeleteEmployeeFailed" xml:space="preserve">
+    <value>Xóa nhân viên thất bại</value>
+  </data>
+  <data name="UserMsg_DuplicateEmployeeCode" xml:space="preserve">
+    <value>Mã nhân viên đã tồn tại trong hệ thống vui lòng kiểm tra lại</value>
+    <comment>Mã nhân viên không được phép trùng</comment>
+  </data>
   <data name="UserMsg_ErrorInsert" xml:space="preserve">
-    <value>Thêm mới nhân viên không thành công !</value>
+    <value>Thêm mới nhân viên thất bại !</value>
     <comment>Message trả về cho user khi gọi API insert thất bại</comment>
   </data>
   <data name="UserMsg_Exception" xml:space="preserve">
     <value>Có lỗi xảy ra! Vui lòng liên hệ với MISA.</value>
     <comment>Message trả về cho user khi gọi API gặp exception</comment>
   </data>
+  <data name="UserMsg_UpdateFailed" xml:space="preserve">
+    <value>Chỉnh sửa nhân viên thất bại</value>
+    <comment>Message trả về cho người dùng khi chỉnh sửa thất bại</comment>
+  </data>
   <data name="ValidateError_DateOfBirth" xml:space="preserve">
     <value>Ngày sinh không lớn hơn ngày hiện tại</value>
     <comment>Ngày sinh không lớn hơn ngày hiện tại</comment>
-  </data>
-  <data name="ValidateError_DuplicateEmployeeCode" xml:space="preserve">
-    <value>Mã nhân viên không được phép trùng</value>
-    <comment>Mã nhân viên không được phép trùng</comment>
   </data>
   <data name="ValidateError_Email" xml:space="preserve">
     <value>Email không đúng định dạng</value>

@@ -168,8 +168,8 @@ namespace MISA.AMIS.KeToan.API.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
                 {
                     ErrorCode = AMISErrorCode.DuplicateCode,
-                    DevMsg = ResourceVN.DevMsg_ErrorInsert,
-                    UserMsg = ResourceVN.ValidateError_DuplicateEmployeeCode,
+                    DevMsg = ResourceVN.DevMsg_DuplicateEmployeeCode,
+                    UserMsg = e.errorMore.First().Value,
                     MoreInfo = e.errorMore,
                     TraceId = HttpContext.TraceIdentifier
                 });
@@ -211,10 +211,10 @@ namespace MISA.AMIS.KeToan.API.Controllers
 
                 return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
-                    ErrorCode = 2,
-                    DevMsg = "Database update failed.",
-                    UserMsg = "Cập nhật nhân viên không thành công !",
-                    MoreInfo = "https://openapi.misa.com.vn/errorcode/1",
+                    ErrorCode = AMISErrorCode.InValidData,
+                    DevMsg = ResourceVN.DevMsg_UpdateFailed,
+                    UserMsg = ResourceVN.UserMsg_UpdateFailed,
+                    MoreInfo = ResourceVN.MoreInfo_UpdateFailed,
                     TraceId = HttpContext.TraceIdentifier
                 });
 
@@ -238,8 +238,8 @@ namespace MISA.AMIS.KeToan.API.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
                 {
                     ErrorCode = AMISErrorCode.DuplicateCode,
-                    DevMsg = ResourceVN.DevMsg_ErrorInsert,
-                    UserMsg = ResourceVN.ValidateError_DuplicateEmployeeCode,
+                    DevMsg = ResourceVN.DevMsg_DuplicateEmployeeCode,
+                    UserMsg = e.errorMore.First().Value,
                     MoreInfo = e.errorMore,
                     TraceId = HttpContext.TraceIdentifier
                 });
@@ -257,12 +257,12 @@ namespace MISA.AMIS.KeToan.API.Controllers
         /// <returns>ID nhân viên vừa xóa</returns>
         /// CreatedBy: VDTien (1/11/2022)
         [HttpDelete("{employeeID}")]
-        public IActionResult DeleteEmployeeByID([FromRoute] Guid employeeID)
+        public async Task<IActionResult> DeleteEmployeeByID([FromRoute] Guid employeeID)
         {
 
             try
             {
-                var result = _employeeBL.DeleteEmployeeByID(employeeID);
+                var result = await _employeeBL.DeleteEmployeeByID(employeeID);
                 //Xử lý kết quả trả về
                 //Thành công: trả về dữ liệu cho FE
                 if (result.numberOfRowsAffected > 0)
@@ -273,7 +273,7 @@ namespace MISA.AMIS.KeToan.API.Controllers
                 //Thất bại: trả về lỗi
                 return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
-                    ErrorCode = 2,
+                    ErrorCode = AMISErrorCode.InValidData,
                     DevMsg = "Database delete record failed.",
                     UserMsg = "Xóa nhân nhân viên không thành công !",
                     MoreInfo = "https://openapi.misa.com.vn/errorcode/1",
@@ -345,7 +345,7 @@ namespace MISA.AMIS.KeToan.API.Controllers
                 ErrorCode = AMISErrorCode.Exception,
                 DevMsg = e.Message,
                 UserMsg = ResourceVN.UserMsg_Exception,
-                MoreInfo = e.Message,
+                MoreInfo = ResourceVN.MoreInfo_Exception,
                 TraceId = HttpContext.TraceIdentifier
             });
         }
