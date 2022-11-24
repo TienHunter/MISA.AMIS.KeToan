@@ -48,6 +48,14 @@ namespace MISA.AMIS.KeToan.Common
         /// </summary>
         public static string GET_EMPLOYEE_CODE_MAX = "Proc_employee_GetEmployeeCodeMax";
 
+        /// <summary>
+        /// Procedure trả về mã nhân viên trùng
+        /// </summary>
         public static string CHECK_DUPLICATE_EMPLOYEE_CODE = "Proc_employee_checkDuplicateEmployeeCode";
+
+        /// <summary>
+        /// Procedure trả về danh sách nhân viên theo bộ lọc
+        /// </summary>
+        public static string GET_EMPLOYEES_BY_FILTER = "Proc_employee_GetByFilter";
     }
 }

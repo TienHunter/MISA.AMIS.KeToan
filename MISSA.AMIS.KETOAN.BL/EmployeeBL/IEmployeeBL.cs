@@ -74,6 +74,14 @@ namespace MISA.AMIS.KeToan.BL
         /// CreatedBy: VDTIEN(1/11/2022)
         public PagingResult GetEmployeesByFilterAndPaging(string keyword, int limit, int offset, string sort);
 
+        /// <summary>
+        /// API lấy danh sách nhân viên theo bộ lọc
+        /// </summary>
+        /// <param name="keyword">Từ khóa muốn tìm kiếm</param>
+        /// <returns>Danh sách nhân viên</returns>
+        /// CreatedBy: VDTIEN(24/11/2022)
+        public List<Employee> GetEmployeesByFilter(string keyword);
+
     }
 
 }

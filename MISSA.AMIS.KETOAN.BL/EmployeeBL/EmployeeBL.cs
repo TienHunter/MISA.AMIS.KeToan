@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace MISA.AMIS.KeToan.BL
 {
@@ -147,6 +149,17 @@ namespace MISA.AMIS.KeToan.BL
         }
 
         /// <summary>
+        /// API lấy danh sách nhân viên theo bộ lọc
+        /// </summary>
+        /// <param name="keyword">Từ khóa muốn tìm kiếm</param>
+        /// <returns>Danh sách nhân viên</returns>
+        /// CreatedBy: VDTIEN(24/11/2022)
+        public List<Employee> GetEmployeesByFilter(string keyword)
+        {
+            return _employeeDL.GetEmployeesByFilter(keyword);
+        }
+
+        /// <summary>
         /// Kiểm tra định dạng Email
         /// </summary>
         /// <param name="email"></param>
@@ -184,6 +197,14 @@ namespace MISA.AMIS.KeToan.BL
             if (string.IsNullOrEmpty(employee.EmployeeCode))
             {
                 errorMore.Add("EmployeeCode", ResourceVN.ValidateError_EmployeeCodeNotEmpty);
+            } else
+            {
+                // 1.2 Kiểm tra định dạnh mã nhân viên
+                string patten = @"^(NV-)(\d+)$";
+                if(!Regex.IsMatch(employee.EmployeeCode, patten))
+                {
+                    errorMore.Add("EmployeeCode", ResourceVN.ValidateError_EmployeeCodeFormat);
+                }
             }
 
             //1.3 Thông tin tên nhân viên không để trống
@@ -201,7 +222,7 @@ namespace MISA.AMIS.KeToan.BL
             }
 
             //1.6 Ngày sinh không lớn hơn ngày hiện tại
-            if(!employee.DateOfBirth.HasValue && employee.DateOfBirth > DateTime.Now)
+            if(employee.DateOfBirth.HasValue && employee.DateOfBirth > DateTime.Now)
             {
                 errorMore.Add("DateOfBirth", ResourceVN.ValidateError_DateOfBirth);
             }

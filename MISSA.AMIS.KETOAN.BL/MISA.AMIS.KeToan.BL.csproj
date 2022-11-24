@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="6.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MISA.AMIS.KeToan.Common\MISA.AMIS.KeToan.Common.csproj" />
     <ProjectReference Include="..\MISA.AMIS.KETOAN.DL\MISA.AMIS.KeToan.DL.csproj" />
   </ItemGroup>

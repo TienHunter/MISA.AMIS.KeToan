@@ -184,6 +184,10 @@
     <value>Email không đúng định dạng</value>
     <comment>Email không đúng định dạng</comment>
   </data>
+  <data name="ValidateError_EmployeeCodeFormat" xml:space="preserve">
+    <value>Mã không đúng đinh dạng [NV-]&lt;Mã số&gt;</value>
+    <comment>Mã không đúng định dạng</comment>
+  </data>
   <data name="ValidateError_EmployeeCodeNotEmpty" xml:space="preserve">
     <value>Mã nhân viên không được để trống</value>
     <comment>Mã nhân viên không được để trống</comment>

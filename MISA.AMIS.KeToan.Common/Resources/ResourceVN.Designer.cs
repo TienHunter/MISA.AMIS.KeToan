@@ -223,6 +223,15 @@ namespace MISA.AMIS.KeToan.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mã không đúng đinh dạng [NV-]&lt;Mã số&gt;.
+        /// </summary>
+        public static string ValidateError_EmployeeCodeFormat {
+            get {
+                return ResourceManager.GetString("ValidateError_EmployeeCodeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mã nhân viên không được để trống.
         /// </summary>
         public static string ValidateError_EmployeeCodeNotEmpty {

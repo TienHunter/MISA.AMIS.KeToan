@@ -71,5 +71,13 @@ namespace MISA.AMIS.KeToan.DL
         /// <returns>true:đã bị trùng; false: không bị trùng</returns>
         /// CreatedBy:VDTIEN(18/11/2022)
         public bool checkDuplicateEmployeeCode(string EmployeeCode, Guid? EmployeeID);
+
+        /// <summary>
+        /// API lấy danh sách nhân viên theo bộ lọc
+        /// </summary>
+        /// <param name="keyword">Từ khóa muốn tìm kiếm</param>
+        /// <returns>Danh sách nhân viên</returns>
+        /// CreatedBy: VDTIEN(24/11/2022)
+        public List<Employee> GetEmployeesByFilter(string keyword);
     }
 }

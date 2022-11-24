@@ -290,6 +290,34 @@ namespace MISA.AMIS.KeToan.DL
 
         }
 
+        /// <summary>
+        /// API lấy danh sách nhân viên theo bộ lọc
+        /// </summary>
+        /// <param name="keyword">Từ khóa muốn tìm kiếm</param>
+        /// <returns>Danh sách nhân viên</returns>
+        /// CreatedBy: VDTIEN(24/11/2022)
+        public List<Employee> GetEmployeesByFilter(string keyword)
+        {
+
+
+
+            //Chuẩn bị câu lệnh SQL
+            string storedProcedureName = Procedure.GET_EMPLOYEES_BY_FILTER;
+
+            //Chuẩn bị tham số đầu vào
+            var parameters = new DynamicParameters();
+            parameters.Add("@keyword", keyword);
+
+            //Khởi tạo kết nối tới DB MySQL
+            using (var mySqlConnection = new MySqlConnection(connectionString))
+            {
+                //Thực hiện gọi vào DB
+                var results =(List<Employee>) mySqlConnection.Query<Employee>(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
+                return results;
+            }
+
+        }
+
         #endregion
 
     }
