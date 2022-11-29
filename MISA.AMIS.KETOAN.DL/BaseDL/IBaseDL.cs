@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,5 +24,6 @@ namespace MISA.AMIS.KeToan.DL
         /// <returns>Thông tin của 1 bản ghi</returns>
         /// Created by: VDTien(10/11/2022)
         public T GetRecordByID(Guid recordID);
+
     }
 }

@@ -42,7 +42,7 @@ namespace MISA.AMIS.KeToan.BL
         /// <param name="employeeID">ID nhân viên muốn xóa</param>
         /// <returns>ID nhân viên vừa xóa</returns>
         /// CreatedBy: VDTien (1/11/2022)
-        public Task<ActionResult> DeleteEmployeeByID(Guid employeeID);
+        public ActionResult DeleteEmployeeByID(Guid employeeID);
 
         /// <summary>
         /// API xóa nhiều nhân viên theo danh sách ID
@@ -81,6 +81,15 @@ namespace MISA.AMIS.KeToan.BL
         /// <returns>Danh sách nhân viên</returns>
         /// CreatedBy: VDTIEN(24/11/2022)
         public List<Employee> GetEmployeesByFilter(string keyword);
+
+
+        /// <summary>
+        /// xuất khẩu dữ liệu
+        /// </summary>
+        /// <param name="records">Danh sách nhân viên xuất khẩu</param>
+        /// <returns>file excel</returns>
+        /// CreatedBy: VDTIEN(24/11/2022)
+        public MemoryStream ExportEmployees(List<Employee> records);
 
     }
 

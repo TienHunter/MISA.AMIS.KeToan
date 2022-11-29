@@ -124,6 +124,15 @@ namespace MISA.AMIS.KeToan.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to s.
+        /// </summary>
+        public static string MinEmployeeCode {
+            get {
+                return ResourceManager.GetString("MinEmployeeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://openapi.misa.com.vn/errorcode/1.
         /// </summary>
         public static string MoreInfo_ErrorInsert {
@@ -210,6 +219,15 @@ namespace MISA.AMIS.KeToan.Common.Resources {
         public static string ValidateError_DateOfBirth {
             get {
                 return ResourceManager.GetString("ValidateError_DateOfBirth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đơn vị không được để trống.
+        /// </summary>
+        public static string ValidateError_DepartmentIDNotEmpty {
+            get {
+                return ResourceManager.GetString("ValidateError_DepartmentIDNotEmpty", resourceCulture);
             }
         }
         

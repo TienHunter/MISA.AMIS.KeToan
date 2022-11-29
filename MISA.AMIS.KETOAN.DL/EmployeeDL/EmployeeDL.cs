@@ -174,7 +174,7 @@ namespace MISA.AMIS.KeToan.DL
         /// <param name="employeeID">ID nhân viên muốn xóa</param>
         /// <returns>ID nhân viên vừa xóa</returns>
         /// CreatedBy: VDTien (1/11/2022)
-        public async Task<ActionResult> DeleteEmployeeByID(Guid employeeID)
+        public  ActionResult DeleteEmployeeByID(Guid employeeID)
         {
 
             //Chuẩn bị câu lệnh SQL
@@ -218,16 +218,18 @@ namespace MISA.AMIS.KeToan.DL
             // Khởi tạo kết nối tới DB MySQL
             using (var mySqlConnection = new MySqlConnection(connectionString))
             {
+                int numberOfRowsAffected = 0;
                 mySqlConnection.Open(); //mở kết nối
                 using (var myTrans = mySqlConnection.BeginTransaction())
                 {
                     //Thực hiện gọi vào DB
-                    int numberOfRowsAffected = mySqlConnection.Execute(storedProcedureName, parameters, myTrans, commandType: System.Data.CommandType.StoredProcedure);
+                     numberOfRowsAffected = mySqlConnection.Execute(storedProcedureName, parameters, transaction:myTrans, commandType: System.Data.CommandType.StoredProcedure);
                     //Xử lý kết quả trả về
                     myTrans.Commit();
-                    return 1;
+                    return numberOfRowsAffected;
+
                 }
-                return -1;
+                
             }
         }
 

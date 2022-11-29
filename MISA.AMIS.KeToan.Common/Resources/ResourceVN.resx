@@ -142,6 +142,10 @@
     <value>Database update failed</value>
     <comment>Message trả về cho dev khi gọi API update thất bại</comment>
   </data>
+  <data name="MinEmployeeCode" xml:space="preserve">
+    <value>s</value>
+    <comment>trường hợp không có bản ghi nào trong db</comment>
+  </data>
   <data name="MoreInfo_ErrorInsert" xml:space="preserve">
     <value>https://openapi.misa.com.vn/errorcode/1</value>
     <comment>Thông tin chi tiết của lỗi khi gọi API insert thất bại</comment>
@@ -179,6 +183,10 @@
   <data name="ValidateError_DateOfBirth" xml:space="preserve">
     <value>Ngày sinh không lớn hơn ngày hiện tại</value>
     <comment>Ngày sinh không lớn hơn ngày hiện tại</comment>
+  </data>
+  <data name="ValidateError_DepartmentIDNotEmpty" xml:space="preserve">
+    <value>Đơn vị không được để trống</value>
+    <comment>Đơn vị không được để trống</comment>
   </data>
   <data name="ValidateError_Email" xml:space="preserve">
     <value>Email không đúng định dạng</value>

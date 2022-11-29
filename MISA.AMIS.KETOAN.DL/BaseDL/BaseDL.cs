@@ -19,6 +19,7 @@ namespace MISA.AMIS.KeToan.DL
 
         #endregion
 
+        #region Methods
         /// <summary>
         /// Lấy danh sách tất cả bản ghi
         /// </summary>
@@ -75,7 +76,6 @@ namespace MISA.AMIS.KeToan.DL
             //return null;
         }
 
-        #region Methods
 
 
 

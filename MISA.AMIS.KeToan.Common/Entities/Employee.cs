@@ -24,13 +24,13 @@ namespace MISA.AMIS.KeToan.Common.Entities
         /// Mã nhân viên
         /// </summary>
        // [Required(ErrorMessage="Mã nhân viên không được để trống")]        
-        public string EmployeeCode { get; set; }
+        public string? EmployeeCode { get; set; }
 
         /// <summary>
         /// Tên nhân viên
         /// </summary> 
        // [Required(ErrorMessage="Tên nhân viên không được để trống")]
-        public string EmployeeName { get; set; }
+        public string? EmployeeName { get; set; }
         
         /// <summary>
         /// Giới tính
@@ -45,7 +45,7 @@ namespace MISA.AMIS.KeToan.Common.Entities
         /// <summary>
         /// id phòng bàn
         /// </summary>
-        public Guid DepartmentID { get; set; }
+        public Guid? DepartmentID { get; set; }
 
         /// <summary>
         /// id phòng bàn

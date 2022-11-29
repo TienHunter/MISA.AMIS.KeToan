@@ -34,7 +34,7 @@ namespace MISA.AMIS.KeToan.DL
         /// <param name="employeeID">ID nhân viên muốn xóa</param>
         /// <returns>ID nhân viên vừa xóa</returns>
         /// CreatedBy: VDTien (1/11/2022)
-        public Task<ActionResult> DeleteEmployeeByID(Guid employeeID);
+        public ActionResult DeleteEmployeeByID(Guid employeeID);
 
         /// <summary>
         /// API xóa nhiều nhân viên theo danh sách ID

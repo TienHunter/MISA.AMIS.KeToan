@@ -14,6 +14,11 @@ namespace MISA.AMIS.KeToan.Common
         public static string GET_ALL = "Proc_{0}_GetAll";
 
         /// <summary>
+        /// Format tên của Procedure láy tất cả bản ghi theo bộ lọc
+        /// </summary>
+        public static string GET_FILTER = "Proc_{0}_GetByFilter";
+
+        /// <summary>
         /// Format tên của Procedure lấy 1 bản ghi theo id
         /// </summary>
         public static string GET_BY_ID = "Proc_{0}_GetById";
