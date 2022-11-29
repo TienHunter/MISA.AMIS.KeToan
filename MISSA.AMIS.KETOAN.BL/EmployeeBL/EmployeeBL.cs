@@ -44,7 +44,7 @@ namespace MISA.AMIS.KeToan.BL
         public ActionResult InsertEmployee(Employee employee)
         {
             // thực hiện validate dữ liệu
-            var errorMore = validateEmployee(employee);
+            var errorMore = ValidateInput(employee);
             if(errorMore.Count > 0)
             {
                 throw new ValidateException(errorMore);
@@ -73,7 +73,7 @@ namespace MISA.AMIS.KeToan.BL
         public ActionResult UpdateEmployee(Guid employeeID, Employee employee)
         {
             // thực hiện validate dữ liệu
-            var errorMore = validateEmployee(employee);
+            var errorMore = ValidateInput(employee);
             if (errorMore.Count > 0)
             {
                 throw new ValidateException(errorMore);
@@ -193,16 +193,12 @@ namespace MISA.AMIS.KeToan.BL
         /// <param name="employee"></param>
         /// <returns>danh sách các lỗi</returns>
         /// CreatedBy: VDTIEN (18/11/2022)
-        private Dictionary<string, string> validateEmployee(Employee employee)
+        public override  Dictionary<string, string> ValidateInput(Employee employee)
         {
-            var errorMore = new Dictionary<string, string>();
-            //1.1 Thông tin mã số nhân viên không để trống
-            if (string.IsNullOrEmpty(employee.EmployeeCode))
+            var errorMore = base.ValidateInput(employee);
+            if (employee.EmployeeCode != null)
             {
-                errorMore.Add("EmployeeCode", ResourceVN.ValidateError_EmployeeCodeNotEmpty);
-            } else
-            {
-                // 1.2 Kiểm tra định dạnh mã nhân viên
+                // 1.1 Kiểm tra định dạnh mã nhân viên
                 string patten = @"^(NV-)(\d+)$";
                 if(!Regex.IsMatch(employee.EmployeeCode, patten))
                 {
@@ -210,28 +206,12 @@ namespace MISA.AMIS.KeToan.BL
                 }
             }
 
-            //1.3 Thông tin tên nhân viên không để trống
-            if (string.IsNullOrEmpty(employee.EmployeeName))
-            {
-                errorMore.Add("EmployeeName", ResourceVN.ValidateError_EmployeeNameNotEmpty);
-            }
-
-            //1.4 Thông tin phòng ban không để trống
-            if(string.IsNullOrEmpty(employee.DepartmentID.ToString()))
-            {
-                errorMore.Add("DepartmentID", ResourceVN.ValidateError_DepartmentIDNotEmpty);
-            }
-            //1.5 Nếu có email thì email phỉa đúng định dạng
+            //1.2 Nếu có email thì email phỉa đúng định dạng
             if (!string.IsNullOrEmpty(employee.Email) && !IsValidEmail(employee.Email))
             {
                 errorMore.Add("Email", ResourceVN.ValidateError_Email);
             }
 
-            //1.6 Ngày sinh không lớn hơn ngày hiện tại
-            if(employee.DateOfBirth.HasValue && employee.DateOfBirth > DateTime.Now)
-            {
-                errorMore.Add("DateOfBirth", ResourceVN.ValidateError_DateOfBirth);
-            }
             return errorMore;
         }
 

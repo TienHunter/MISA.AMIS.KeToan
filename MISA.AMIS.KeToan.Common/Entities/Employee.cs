@@ -1,4 +1,5 @@
-﻿using MISA.AMIS.KeToan.Common.Enums;
+﻿using MISA.AMIS.KeToan.Common.Attributes;
+using MISA.AMIS.KeToan.Common.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata.Ecma335;
 
@@ -23,13 +24,13 @@ namespace MISA.AMIS.KeToan.Common.Entities
         /// <summary>
         /// Mã nhân viên
         /// </summary>
-       // [Required(ErrorMessage="Mã nhân viên không được để trống")]        
+        [NotNullOrNotEmpty(ErrorMessage = "Mã nhân viên không được để trống không được để trống")]
         public string? EmployeeCode { get; set; }
 
         /// <summary>
         /// Tên nhân viên
         /// </summary> 
-       // [Required(ErrorMessage="Tên nhân viên không được để trống")]
+        [NotNullOrNotEmpty(ErrorMessage = "Tên nhân viên không được để trống không được để trống")]
         public string? EmployeeName { get; set; }
         
         /// <summary>
@@ -40,16 +41,19 @@ namespace MISA.AMIS.KeToan.Common.Entities
         /// <summary>
         /// Ngày sinh
         /// </summary>
+        [ErrorDate(ErrorMessage = "Ngày sinh không lớn hơn ngày hiện tại")]
        public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
         /// id phòng bàn
         /// </summary>
+        [NotNullOrNotEmpty(ErrorMessage = "Đơn vị không được để trống không được để trống")]
         public Guid? DepartmentID { get; set; }
 
         /// <summary>
         /// id phòng bàn
         /// </summary>
+        
         public string? DepartmentName { get; set; }
         /// <summary>
         /// tên chức danh
@@ -60,10 +64,11 @@ namespace MISA.AMIS.KeToan.Common.Entities
         /// Số CMND
         /// </summary>
         public string? IdentityNumber { get; set; }
-        
+
         /// <summary>
         /// Ngày cấp CMND
         /// </summary>
+        [ErrorDate(ErrorMessage = "Ngày cấp không lớn hơn ngày hiện tại")]
         public DateTime? IdentityDate { get; set; }
         
         /// <summary>
